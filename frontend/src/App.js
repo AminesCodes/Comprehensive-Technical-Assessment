@@ -1,12 +1,14 @@
 import React from 'react';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
+class App extends React.PureComponent {
 
-    </div>
-  );
+  render() {
+    return (
+      <div className="App">
+  
+      </div>
+    );
+  }
 }
 
 export default App;

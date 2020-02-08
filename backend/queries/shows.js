@@ -18,10 +18,12 @@ const createShow = async (title, imgUrl, userId, genreId) => {
 }
 
 const getShowByGenreId = async (genreId) => {
+    await db.one('SELECT * FROM genres WHERE id=$1', genreId)
     return await db.any('SELECT * FROM shows WHERE genre_id=$1', genreId)
 }
 
 const getShowByUserId = async (userId) => {
+    await db.one('SELECT * FROM users WHERE id=$1', userId)
     return await db.any('SELECT * FROM shows WHERE user_id=$1', userId)
 }
 
@@ -73,6 +75,7 @@ const getShowByGenreIdWithAllInfo = async (genreId) => {
             JOIN users ON user_id=users.id
         WHERE genre_id=$1
     `
+    await db.one('SELECT * FROM genres WHERE id=$1', genreId)
     return await db.any(selectQuery, genreId)
 }
 
@@ -89,7 +92,8 @@ const getShowByUserIdWithAllInfo = async (userId) => {
         FROM shows JOIN genres ON genre_id=genres.id
             JOIN users ON user_id=users.id
         WHERE user_id=$1
-    `
+        `
+    await db.one('SELECT * FROM users WHERE id=$1', userId)
     return await db.any(selectQuery, userId)
 }
 

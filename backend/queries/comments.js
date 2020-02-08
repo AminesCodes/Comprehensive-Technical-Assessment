@@ -1,6 +1,7 @@
 const db = require('../database/db');
 
 const getCommentsByShowId = async (showId) => {
+    await db.one('SELECT * FROM shows WHERE id=$1', showId)
     return await db.any('SELECT * FROM comments WHERE show_id=$1', showId);
 }
 
