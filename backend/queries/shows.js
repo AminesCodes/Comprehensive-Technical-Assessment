@@ -25,10 +25,82 @@ const getShowByUserId = async (userId) => {
     return await db.any('SELECT * FROM shows WHERE user_id=$1', userId)
 }
 
+//#########################################################################
+const getAllShowsWithAllInfo = async () => {
+    const selectQuery = `
+        SELECT 
+            title, 
+            shows.img_url AS show_img, 
+            user_id, 
+            genre_id, 
+            username, 
+            avatar_url, 
+            genre_name
+        FROM shows JOIN genres ON genre_id=genres.id
+            JOIN users ON user_id=users.id
+    `
+    return await db.any(selectQuery);
+}
+
+const getShowByIdWithAllInfo = async (id) => {
+    const selectQuery = `
+        SELECT 
+            title, 
+            shows.img_url AS show_img, 
+            user_id, 
+            genre_id, 
+            username, 
+            avatar_url, 
+            genre_name
+        FROM shows JOIN genres ON genre_id=genres.id
+            JOIN users ON user_id=users.id
+        WHERE id=$1
+    `
+    return await db.one(selectQuery, id)
+}
+
+const getShowByGenreIdWithAllInfo = async (genreId) => {
+    const selectQuery = `
+        SELECT 
+            title, 
+            shows.img_url AS show_img, 
+            user_id, 
+            genre_id, 
+            username, 
+            avatar_url, 
+            genre_name
+        FROM shows JOIN genres ON genre_id=genres.id
+            JOIN users ON user_id=users.id
+        WHERE genre_id=$1
+    `
+    return await db.any(selectQuery, genreId)
+}
+
+const getShowByUserIdWithAllInfo = async (userId) => {
+    const selectQuery = `
+        SELECT 
+            title, 
+            shows.img_url AS show_img, 
+            user_id, 
+            genre_id, 
+            username, 
+            avatar_url, 
+            genre_name
+        FROM shows JOIN genres ON genre_id=genres.id
+            JOIN users ON user_id=users.id
+        WHERE user_id=$1
+    `
+    return await db.any(selectQuery, userId)
+}
+
 module.exports = {
     getAllShows,
     getShowById,
     createShow,
     getShowByGenreId,
     getShowByUserId,
+    getAllShowsWithAllInfo,
+    getShowByIdWithAllInfo,
+    getShowByGenreIdWithAllInfo,
+    getShowByUserIdWithAllInfo,
   }
