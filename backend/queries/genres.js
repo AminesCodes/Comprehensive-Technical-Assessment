@@ -1,10 +1,10 @@
 const db = require('../database/db');
 
-const GetAllGenres = async () => {
+const getAllGenres = async () => {
     return await db.any('SELECT * FROM genres');
 }
 
-const createGenres = async (genre) => {
+const createGenre = async (genre) => {
     const insertQuery = `
         INSERT INTO genres (genre_name) 
         VALUES ($1)
@@ -14,6 +14,6 @@ const createGenres = async (genre) => {
 }
 
 module.exports = {
-    GetAllGenres,
-    createGenres,
+    getAllGenres,
+    createGenre,
   }

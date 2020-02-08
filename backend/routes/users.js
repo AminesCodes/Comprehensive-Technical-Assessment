@@ -5,10 +5,8 @@ const usersQuery = require('../queries/users')
 const { sendError, idChecker, paramChecker } = require('./helpers/errorHandler')
 
 
-
 /* GET users listing. */
 router.get('/', async (request, response) => {
-  console.log('ok')
   try {
     const allUsers = await usersQuery.getAllUsers()
     response.json({
