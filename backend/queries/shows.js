@@ -18,11 +18,11 @@ const createShow = async (title, imgUrl, userId, genreId) => {
 }
 
 const getShowByGenreId = async (genreId) => {
-    return await db.one('SELECT * FROM shows WHERE genre_id=$1', genreId)
+    return await db.any('SELECT * FROM shows WHERE genre_id=$1', genreId)
 }
 
 const getShowByUserId = async (userId) => {
-    return await db.one('SELECT * FROM shows WHERE user_id=$1', userId)
+    return await db.any('SELECT * FROM shows WHERE user_id=$1', userId)
 }
 
 module.exports = {
