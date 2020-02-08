@@ -1,7 +1,3 @@
-/*
-GET	/comments/show/:show_id	Get all comments for specific show_id	n/a
-POST	/comments	Add new comment	comment_body, user_id, show_id */
-
 const db = require('../database/db');
 
 const getCommentsByShowId = async (showId) => {

@@ -8,6 +8,7 @@ const { sendError, idChecker, paramChecker } = require('./helpers/errorHandler')
 
 /* GET users listing. */
 router.get('/', async (request, response) => {
+  console.log('ok')
   try {
     const allUsers = await usersQuery.getAllUsers()
     response.json({
@@ -22,7 +23,7 @@ router.get('/', async (request, response) => {
 
 /* GET user by ID. */
 router.get('/:userId', async (request, response) => {
-  const userId = request.param.userId
+  const userId = request.params.userId
   if (idChecker(response, userId)) {
     try {
       const user = await usersQuery.getUserById(userId)

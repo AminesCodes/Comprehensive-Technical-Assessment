@@ -2,7 +2,7 @@
   "name": "TVShow-Watchlist-App",
   "version": "1.0.0",
   "description": "<img src=\"https://avatars1.githubusercontent.com/u/5825944?s=200&v=4\" width=\"100px\" style=\"text-align: center;\">",
-  "main": "index.js",
+  "main": "backend/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

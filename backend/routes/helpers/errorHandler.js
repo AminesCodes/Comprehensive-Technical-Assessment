@@ -6,6 +6,13 @@ const sendError = (response, err) => {
         message: 'Username already registered',
         payload: null,
       }) 
+    } else if (err.message === 'No data returned from the query.') {
+      console.log('No match for the selection')
+      response.status(404).json({
+        error: true,
+        message: 'No match for the selection',
+        payload: null,
+      }) 
     } else {
       console.log(err)
       response.status(500).json({
@@ -32,7 +39,7 @@ const paramChecker = (response, param) => {
     if (!param) {
         response.status(400).json({
             error: true,
-            message: 'Bad request params',
+            message: 'Bad request, Missing information',
             payload: null
           })
         return false
