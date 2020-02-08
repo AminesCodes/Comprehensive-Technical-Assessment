@@ -2,23 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const genresQuery = require('../queries/genres')
-const { sendError, paramChecker } = require('./helpers/errorHandler')
-
-//FUNCTION TO FORMAT NAMES
-const normalizeGenreName = str => {
-  str = str.trim()
-  const arr = str.split(' ')
-  let outputStr = '';
-  for (let word of arr) {
-      if (word && typeof word === 'string' && word !== ' ') {
-          outputStr += word[0].toUpperCase() + (word.slice(1, word.length)).toLowerCase() + ' ';
-      }
-  }
-  if (outputStr) {
-      return outputStr.trim();
-  }
-  return str; 
-}
+const { sendError, paramChecker, normalizeName } = require('./helpers/helpers')
 
 
 /* GET all genres. */
@@ -37,11 +21,11 @@ router.get('/', async (request, response) => {
 
 /* POST: create a new genre. */
 router.post('/', async (request, response) => {
-  let genreName = request.body.genreName
-  if (paramChecker(response, genreName)) {
-    genreName = normalizeGenreName(genreName)
+  let genre_name = request.body.genre_name
+  if (paramChecker(response, genre_name)) {
+    genre_name = normalizeName(genre_name)
     try {
-      const genre = await genresQuery.createGenre(genreName)
+      const genre = await genresQuery.createGenre(genre_name)
       response.json({
         error: false,
         message: 'Successfully created a new genre',

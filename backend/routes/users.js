@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const usersQuery = require('../queries/users')
-const { sendError, idChecker, paramChecker } = require('./helpers/errorHandler')
+const { sendError, idChecker, paramChecker } = require('./helpers/helpers')
 
 
 /* GET users listing. */
@@ -38,10 +38,10 @@ router.get('/:userId', async (request, response) => {
 
 /* POST: create a new user. */
 router.post('/', async (request, response) => {
-  const { username, avatarUrl } = request.body
-  if (paramChecker(response, username) && paramChecker(response, avatarUrl)) {
+  const { username, avatar_url } = request.body
+  if (paramChecker(response, username) && paramChecker(response, avatar_url)) {
     try {
-      const user = await usersQuery.createUser(username, avatarUrl)
+      const user = await usersQuery.createUser(username, avatar_url)
       response.json({
         error: false,
         message: 'Successfully created a new user',

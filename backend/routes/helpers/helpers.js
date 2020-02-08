@@ -13,6 +13,12 @@ const sendError = (response, err) => {
         message: 'No match for the selection',
         payload: null,
       }) 
+    } else if (err.code === '23503') {
+      response.status(403).json({
+        error: true,
+        message: 'Reference error!',
+        payload: null,
+      }) 
     } else {
       console.log(err)
       response.status(500).json({
@@ -47,8 +53,25 @@ const paramChecker = (response, param) => {
     return true
 }
 
+//FUNCTION TO FORMAT NAMES
+const normalizeName = str => {
+  str = str.trim()
+  const arr = str.split(' ')
+  let outputStr = '';
+  for (let word of arr) {
+      if (word && typeof word === 'string' && word !== ' ') {
+          outputStr += word[0].toUpperCase() + (word.slice(1, word.length)).toLowerCase() + ' ';
+      }
+  }
+  if (outputStr) {
+      return outputStr.trim();
+  }
+  return str; 
+}
+
 module.exports = {
     sendError,
     idChecker,
     paramChecker,
+    normalizeName,
 }
