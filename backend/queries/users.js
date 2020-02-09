@@ -8,6 +8,10 @@ const getUserById = async (id) => {
     return await db.one('SELECT * FROM users WHERE id=$1', id)
 }
 
+const getUserByUsername = async (username) => {
+    return await db.one('SELECT * FROM users WHERE username=$1', username)
+}
+
 const createUser = async (username, avatarUrl) => {
     const insertQuery = `
         INSERT INTO users (username, avatar_url) 
@@ -20,5 +24,6 @@ const createUser = async (username, avatarUrl) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    getUserByUsername,
     createUser,
   }

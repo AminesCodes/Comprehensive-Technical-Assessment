@@ -15,7 +15,6 @@ export default class Users extends React.PureComponent {
     getAllUsers = async() => {
         try {
             const { data } = await axios.get('/api/users')
-            console.log(data.payload)
             this.setState({allUsers: data.payload})
         } catch (err) {
             this.setState({networkErr: err})
