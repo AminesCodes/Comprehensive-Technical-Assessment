@@ -32,7 +32,7 @@ const getCommentsByShowIdWithAllInfo = async (showId) => {
             JOIN users on comments.user_id=users.id
         WHERE show_id=$1
     `
-    return await db.any('SELECT * FROM comments WHERE show_id=$1', showId);
+    return await db.any(selectQuery, showId);
 }
 
 module.exports = {

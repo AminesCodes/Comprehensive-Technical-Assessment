@@ -93,6 +93,24 @@ router.get('/user/:userId', async (request, response) => {
   }
 });
 
+/* GET specific for specific user. */
+router.get('/show/:showId/:userId', async (request, response) => {
+  const showId = request.params.showId
+  const userId = request.params.userId
+  if (idChecker(response, userId) && idChecker(response, userId)) {
+    try {
+      const shows = await showsQuery.getShowByShowIdAndUserId(showId, userId)
+      response.json({
+        error: false,
+        message: `Successfully retrieved all shows for user id ${userId}`,
+        payload: shows
+      })
+    } catch (err) {
+      sendError(response, err)
+    }
+  }
+});
+
 
 
 module.exports = router;

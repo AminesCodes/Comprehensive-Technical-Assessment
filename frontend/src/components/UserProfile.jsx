@@ -8,6 +8,7 @@ import ShowThumbnail from './ShowThumbnail'
 export default class UserProfile extends React.PureComponent {
 state = {
     username: '',
+    userId: 0,
     avatarUrl: '',
     showsList: [],
     networkErr: null,
@@ -21,8 +22,10 @@ getUserProfile = async(userId) => {
 
         const [ user, showsList ] = await Promise.all(promises)
         console.log(showsList.data.payload)
+        console.log('HERE!!!: ',user)
         this.setState({
             username: user.data.payload.username,
+            userId: user.data.payload.id,
             avatarUrl: user.data.payload.avatar_url,
             showsList: showsList.data.payload
         })
@@ -65,6 +68,7 @@ render() {
                         genre={show.genre_name}
                         showId={show.show_id}
                         genreId={show.genre_id}
+                        userId={this.state.userId}
                     />
                 )}
             </div>

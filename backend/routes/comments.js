@@ -9,7 +9,7 @@ const { sendError, idChecker, paramChecker } = require('./helpers/helpers')
 router.get('/show/:showId', async (request, response) => {
   const showId = request.params.showId
   try {
-    const allComments = await commentsQuery.getCommentsByShowId(showId)
+    const allComments = await commentsQuery.getCommentsByShowIdWithAllInfo(showId)
     response.json({
       error: false,
       message: `Successfully retrieved all comments related to show id ${showId}`,

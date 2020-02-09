@@ -112,6 +112,22 @@ const getShowByUserIdWithGenreInfo = async (userId) => {
     return await db.any(selectQuery, userId)
 }
 
+const getShowByShowIdAndUserId = async (showId, userId) => {
+    const selectQuery = `
+        SELECT 
+            shows.id as show_id,
+            title, 
+            img_url,
+            username
+        FROM shows JOIN users 
+            ON user_id=users.id
+        WHERE shows.id=$1 
+            AND user_id=$2
+        `
+    return await db.one(selectQuery, [showId, userId])
+}
+
+
 module.exports = {
     getAllShows,
     getShowById,
@@ -122,5 +138,6 @@ module.exports = {
     getShowByIdWithAllInfo,
     getShowByGenreIdWithAllInfo,
     getShowByUserIdWithAllInfo,
-    getShowByUserIdWithGenreInfo
+    getShowByUserIdWithGenreInfo,
+    getShowByShowIdAndUserId,
   }
