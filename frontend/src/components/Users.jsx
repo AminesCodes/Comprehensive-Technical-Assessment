@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import Feedback from './Feedback'
@@ -29,20 +28,22 @@ export default class Users extends React.PureComponent {
     }
 
     render() {
+        const loggedUserId = parseInt(localStorage.getItem('#TV#$how@Watch&List#_UID'))
+
         if (this.state.networkErr) {
             return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
         }
         return(
             <>
                 {this.state.allUsers.map(user =>
-                        <Link to={`/users/${user.id}`} key={user.username+user.avatar_url+user.id} >
-                            <UserCard 
-                                userId={user.id}
-                                username={user.username}
-                                avatarUrl={user.avatar_url}
-                            />
-                        </Link>
-                    )}
+                    <UserCard 
+                        key={user.username+user.avatar_url+user.id} 
+                        userId={user.id}
+                        username={user.username}
+                        avatarUrl={user.avatar_url}
+                        loggedUser={loggedUserId === user.id}
+                    />
+                )}
             </>
         )
     }
