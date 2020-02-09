@@ -32,7 +32,7 @@ const getAllShowsWithAllInfo = async () => {
     const selectQuery = `
         SELECT 
             title, 
-            shows.img_url AS show_img, 
+            img_url, 
             user_id, 
             genre_id, 
             username, 
@@ -48,7 +48,7 @@ const getShowByIdWithAllInfo = async (id) => {
     const selectQuery = `
         SELECT 
             title, 
-            shows.img_url AS show_img, 
+            img_url, 
             user_id, 
             genre_id, 
             username, 
@@ -65,7 +65,7 @@ const getShowByGenreIdWithAllInfo = async (genreId) => {
     const selectQuery = `
         SELECT 
             title, 
-            shows.img_url AS show_img, 
+            img_url, 
             user_id, 
             genre_id, 
             username, 
@@ -83,7 +83,7 @@ const getShowByUserIdWithAllInfo = async (userId) => {
     const selectQuery = `
         SELECT 
             title, 
-            shows.img_url AS show_img, 
+            img_url, 
             user_id, 
             genre_id, 
             username, 
@@ -91,6 +91,21 @@ const getShowByUserIdWithAllInfo = async (userId) => {
             genre_name
         FROM shows JOIN genres ON genre_id=genres.id
             JOIN users ON user_id=users.id
+        WHERE user_id=$1
+        `
+    await db.one('SELECT * FROM users WHERE id=$1', userId)
+    return await db.any(selectQuery, userId)
+}
+
+const getShowByUserIdWithGenreInfo = async (userId) => {
+    const selectQuery = `
+        SELECT 
+            shows.id as show_id,
+            title, 
+            img_url, 
+            genre_id,  
+            genre_name
+        FROM shows JOIN genres ON genre_id=genres.id
         WHERE user_id=$1
         `
     await db.one('SELECT * FROM users WHERE id=$1', userId)
@@ -107,4 +122,5 @@ module.exports = {
     getShowByIdWithAllInfo,
     getShowByGenreIdWithAllInfo,
     getShowByUserIdWithAllInfo,
+    getShowByUserIdWithGenreInfo
   }

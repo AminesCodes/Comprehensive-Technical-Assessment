@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 export default function UserCard(props) {
     const avatarStyle = {
@@ -12,15 +11,13 @@ export default function UserCard(props) {
         border: 'solid black 1px',
     }
     return (
-        <Link to={`/users/${props.userId}`}>
-            <div className='card m-3 text-center'>
-                <div className='card-img-top d-flex align-items-center bg-light'>
-                    <div>
-                        <img className='img-fluid' src={props.avatarUrl} alt={`${props.username}'s avatar`} style={avatarStyle}/>
-                    </div>
-                    <h4 className='col p-2 m-0'>{props.username}</h4>
+        <div className='card m-3 text-center'>
+            <div className='card-img-top d-flex align-items-center bg-light'>
+                <div>
+                    <img className='img-fluid' src={props.avatarUrl} alt={`${props.username}'s avatar`} style={avatarStyle}/>
                 </div>
+                <h4 className='col p-2 m-0'>{props.username}</h4>
             </div>
-        </Link>
+        </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import Feedback from './Feedback'
@@ -7,7 +8,7 @@ import UserCard from './UserCard'
 export default class Users extends React.PureComponent {
     state = {
         allUsers: [],
-        networkErr: false,
+        networkErr: null,
 
     }
 
@@ -35,12 +36,13 @@ export default class Users extends React.PureComponent {
         return(
             <>
                 {this.state.allUsers.map(user =>
-                        <UserCard 
-                            key={user.username+user.avatar_url+user.id} 
-                            userId={user.id}
-                            username={user.username}
-                            avatarUrl={user.avatar_url}
-                        />
+                        <Link to={`/users/${user.id}`} key={user.username+user.avatar_url+user.id} >
+                            <UserCard 
+                                userId={user.id}
+                                username={user.username}
+                                avatarUrl={user.avatar_url}
+                            />
+                        </Link>
                     )}
             </>
         )

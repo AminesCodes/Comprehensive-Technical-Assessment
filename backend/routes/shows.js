@@ -81,7 +81,7 @@ router.get('/user/:userId', async (request, response) => {
   const userId = request.params.userId
   if (idChecker(response, userId)) {
     try {
-      const shows = await showsQuery.getShowByUserId(userId)
+      const shows = await showsQuery.getShowByUserIdWithGenreInfo(userId)
       response.json({
         error: false,
         message: `Successfully retrieved all shows for user id ${userId}`,
