@@ -14,7 +14,7 @@ export default function Home (props) {
     let form = null
     if (!loggedUserId) {
         form = <LoginForm
-        handleLogUser={props.handleLogUser} 
+        handleFormSubmit={props.handleFormSubmit} 
         username={props.username} 
         handleInput={props.handleInput}
       />

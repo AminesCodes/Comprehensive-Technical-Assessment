@@ -21,7 +21,7 @@ class App extends React.Component {
     networkErr: null,
   }
 
-  handleLogUser = async (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault()
 
     if (this.state.username) {
@@ -57,8 +57,8 @@ class App extends React.Component {
 
   render() {
     let pageContent = <Home 
-        handleLogUser={this.handleLogUser} 
-        username={this.state.username} 
+        handleFormSubmit={this.handleFormSubmit} 
+        inputValue={this.state.username} 
         handleInput={this.handleInput}
       />
 

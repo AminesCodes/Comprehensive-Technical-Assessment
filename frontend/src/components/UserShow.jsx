@@ -2,7 +2,8 @@ import React from 'react'
 import axios from 'axios'
 
 import Feedback from './Feedback'
-import Shows from './Shows'
+import CommentCard from './CommentCard'
+import CommentForm from './LoginForm'
 
 export default class UserShow extends React.PureComponent{
     state = {
@@ -10,6 +11,7 @@ export default class UserShow extends React.PureComponent{
         showImage: '',
         targetUsername: '',
         showComments: [],
+        comment: '',
         networkErr: null
     }
 
@@ -27,8 +29,6 @@ export default class UserShow extends React.PureComponent{
                 targetUsername: show.data.payload.username,
                 showComments: comments.data.payload,
             })
-            console.log(show.data.payload)
-            console.log(comments.data.payload)
         } catch (err) {
             this.setState({ networkErr: err })
         }
@@ -38,6 +38,30 @@ export default class UserShow extends React.PureComponent{
         const showId = (this.props.match.url).split('/')[2]
         const userId = (this.props.match.url).split('/')[3]
         this.getShowInfo(showId, userId)
+    }
+
+    handleFormSubmit = async (event) => {
+        event.preventDefault()
+        console.log('submit comment')
+
+        if (this.state.comment) {
+            const requestBody = { 
+                comment_body: this.state.comment, 
+                user_id: localStorage.getItem('#TV#$how@Watch&List#_UID'), 
+                show_id: (this.props.match.url).split('/')[2]
+            }
+
+            try {
+                const { data } = await axios.post('/api/comments', requestBody)
+                console.log(data)
+            } catch (err) {
+                this.setState({ networkErr: err })
+            }
+        }
+    }
+
+    handleInput = event => {
+        this.setState({ comment: event.target.value})
     }
 
     hideFeedbackDiv = () => {
@@ -51,7 +75,20 @@ export default class UserShow extends React.PureComponent{
 
         return(
             <div className='w-75 mx-auto mt-5'>
-                user show
+                <CommentForm 
+                    handleFormSubmit={this.handleFormSubmit}
+                    handleInput={this.handleInput}
+                    inputValue={this.state.comment}
+                />
+                {this.state.showComments.map(comment => 
+                    <CommentCard 
+                        key={comment.targetUsername+comment.title+comment.comment_body}
+                        userId={comment.userId}
+                        username={comment.username}
+                        avatarUrl={comment.avatar_url}
+                        comment={comment.comment_body}
+                    />
+                )}
             </div>
         )
     }
