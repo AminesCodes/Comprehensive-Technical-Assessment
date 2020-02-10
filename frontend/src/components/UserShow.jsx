@@ -22,7 +22,7 @@ export default class UserShow extends React.PureComponent{
             promises.push(axios.get(`/api/comments/show/${showId}`))
 
             const [ show, comments ] = await Promise.all(promises)
-
+            console.log(show.data.payload)
             this.setState({
                 showTitle: show.data.payload.title,
                 showImage: show.data.payload.img_url,
@@ -74,21 +74,29 @@ export default class UserShow extends React.PureComponent{
         }
 
         return(
-            <div className='w-75 mx-auto mt-5'>
-                <CommentForm 
-                    handleFormSubmit={this.handleFormSubmit}
-                    handleInput={this.handleInput}
-                    inputValue={this.state.comment}
-                />
-                {this.state.showComments.map(comment => 
-                    <CommentCard 
-                        key={comment.targetUsername+comment.title+comment.comment_body}
-                        userId={comment.userId}
-                        username={comment.username}
-                        avatarUrl={comment.avatar_url}
-                        comment={comment.comment_body}
+            <div className='container'>
+                <div className='container'>
+                    show name 
+                    show picture
+                    show owner username
+                </div>
+
+                <div className='w-75 mx-auto mt-5'>
+                    <CommentForm 
+                        handleFormSubmit={this.handleFormSubmit}
+                        handleInput={this.handleInput}
+                        inputValue={this.state.comment}
                     />
-                )}
+                    {this.state.showComments.map(comment => 
+                        <CommentCard 
+                            key={comment.targetUsername+comment.title+comment.comment_body}
+                            userId={comment.userId}
+                            username={comment.username}
+                            avatarUrl={comment.avatar_url}
+                            comment={comment.comment_body}
+                        />
+                    )}
+                </div>
             </div>
         )
     }

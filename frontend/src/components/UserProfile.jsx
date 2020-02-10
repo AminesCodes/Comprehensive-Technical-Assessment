@@ -22,7 +22,6 @@ getUserProfile = async(userId) => {
 
         const [ user, showsList ] = await Promise.all(promises)
         console.log(showsList.data.payload)
-        console.log('HERE!!!: ',user)
         this.setState({
             username: user.data.payload.username,
             userId: user.data.payload.id,

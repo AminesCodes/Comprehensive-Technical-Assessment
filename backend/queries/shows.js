@@ -115,12 +115,15 @@ const getShowByUserIdWithGenreInfo = async (userId) => {
 const getShowByShowIdAndUserId = async (showId, userId) => {
     const selectQuery = `
         SELECT 
-            shows.id as show_id,
+            shows.id AS show_id,
             title, 
             img_url,
-            username
+            username,
+            genre_name AS genre
         FROM shows JOIN users 
             ON user_id=users.id
+            JOIN genres
+            ON genre_id = genres.id
         WHERE shows.id=$1 
             AND user_id=$2
         `
