@@ -32,7 +32,7 @@ const getAllShowsWithAllInfo = async () => {
     const selectQuery = `
         SELECT 
             title, 
-            array_agg(img_url) AS show_url, 
+            array_agg(img_url) AS image_url, 
             array_agg(user_id) AS users_ids, 
             array_agg(username) AS usernames, 
             array_agg(genre_id) AS genre_ids, 
