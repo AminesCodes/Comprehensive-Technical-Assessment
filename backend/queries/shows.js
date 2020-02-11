@@ -32,14 +32,14 @@ const getAllShowsWithAllInfo = async () => {
     const selectQuery = `
         SELECT 
             title, 
-            img_url, 
-            user_id, 
-            genre_id, 
-            username, 
-            avatar_url, 
-            genre_name
+            array_agg(img_url) AS show_url, 
+            array_agg(user_id) AS users_ids, 
+            array_agg(username) AS usernames, 
+            array_agg(genre_id) AS genre_ids, 
+            array_agg(genre_name) AS genre_names
         FROM shows JOIN genres ON genre_id=genres.id
             JOIN users ON user_id=users.id
+        GROUP BY title
     `
     return await db.any(selectQuery);
 }

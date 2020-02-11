@@ -69,7 +69,7 @@ class App extends React.Component {
       />
 
       if (this.state.networkErr) {
-        pageContent = <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
+        return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
       }
       
       

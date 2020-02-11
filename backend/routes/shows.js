@@ -8,7 +8,7 @@ const { sendError, idChecker, paramChecker, normalizeName } = require('./helpers
 /* GET shows listing. */
 router.get('/', async (request, response) => {
   try {
-    const allShows = await showsQuery.getAllShows()
+    const allShows = await showsQuery.getAllShowsWithAllInfo()
     response.json({
       error: false,
       message: 'Successfully retrieved all shows',
