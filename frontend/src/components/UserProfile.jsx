@@ -19,9 +19,8 @@ getUserProfile = async(userId) => {
         const promises = []
         promises.push(axios.get(`/api/users/${userId}`))
         promises.push(axios.get(`/api/shows/user/${userId}`))
-
         const [ user, showsList ] = await Promise.all(promises)
-        console.log(showsList.data.payload)
+        
         this.setState({
             username: user.data.payload.username,
             userId: user.data.payload.id,

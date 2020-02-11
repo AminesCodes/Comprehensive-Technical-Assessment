@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, withRouter, Redirect} from 'react-router-dom';
+import { Switch, Route, withRouter} from 'react-router-dom';
 import axios from 'axios';
 
 import TopBar from './components/TopBar';
@@ -9,6 +9,7 @@ import About from './components/About';
 import Home from './components/Home';
 import Shows from './components/Shows';
 import Feedback from './components/Feedback';
+import ShowForm from './components/ShowForm'
 
 import UserProfile from './components/UserProfile';
 import UserShow from './components/UserShow';
@@ -37,8 +38,13 @@ class App extends React.Component {
     }
   }
 
+  handleSubmitShowForm = async (event) => {
+    event.preventDefault()
+
+  }
+
   handleInput = event => {
-    this.setState({ username: event.target.value})
+    this.setState({ [event.target.name]: event.target.value})
   }
 
   hideFeedbackDiv = () => {
@@ -80,6 +86,7 @@ class App extends React.Component {
               <Route path='/users/:userId' component={UserProfile}></Route>
               <Route path='/users' component={Users}></Route>
               <Route path='/shows/:showId/:userId' component={UserShow}></Route>
+              <Route path='/shows/add-show' component={ShowForm}></Route>
               <Route path='/shows' component={Shows}></Route>
               <Route path='/about' component={About}></Route>
               <Route path='/' component={Home}></Route>
