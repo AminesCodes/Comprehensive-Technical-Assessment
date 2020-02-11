@@ -3,12 +3,17 @@ import axios from 'axios'
 
 import Feedback from './Feedback'
 import CommentCard from './CommentCard'
-import CommentForm from './LoginForm'
+import CommentForm from './CommentForm'
+import UserShowCard from './UserShowCard'
 
 export default class UserShow extends React.PureComponent{
     state = {
+        showId: 0,
         showTitle: '',
         showImage: '',
+        showGenreId: 0,
+        showGenre: '',
+        targetUserId: 0,
         targetUsername: '',
         showComments: [],
         comment: '',
@@ -22,10 +27,14 @@ export default class UserShow extends React.PureComponent{
             promises.push(axios.get(`/api/comments/show/${showId}`))
 
             const [ show, comments ] = await Promise.all(promises)
-            console.log(show.data.payload)
+            
             this.setState({
+                showId: show.data.payload.show_id,
                 showTitle: show.data.payload.title,
                 showImage: show.data.payload.img_url,
+                showGenreId: show.data.payload.genre_id,
+                showGenre: show.data.payload.genre,
+                targetUserId: show.data.payload.user_id,
                 targetUsername: show.data.payload.username,
                 showComments: comments.data.payload,
             })
@@ -42,13 +51,12 @@ export default class UserShow extends React.PureComponent{
 
     handleFormSubmit = async (event) => {
         event.preventDefault()
-        console.log('submit comment')
 
-        if (this.state.comment) {
+        if (this.state.comment && this.state.showId) {
             const requestBody = { 
                 comment_body: this.state.comment, 
                 user_id: localStorage.getItem('#TV#$how@Watch&List#_UID'), 
-                show_id: (this.props.match.url).split('/')[2]
+                show_id: this.state.showId
             }
 
             try {
@@ -76,9 +84,16 @@ export default class UserShow extends React.PureComponent{
         return(
             <div className='container'>
                 <div className='container'>
-                    show name 
-                    show picture
-                    show owner username
+                    <UserShowCard 
+                        showId={this.state.showId}
+                        title={this.state.showTitle}
+                        imageUrl={this.state.showImage}
+                        userId={this.state.targetUserId}
+                        username={this.state.targetUsername}
+                        genreId={this.state.showGenreId}
+                        genre={this.state.showGenre}
+                        commentsCount={this.state.showComments.length}
+                    />
                 </div>
 
                 <div className='w-75 mx-auto mt-5'>

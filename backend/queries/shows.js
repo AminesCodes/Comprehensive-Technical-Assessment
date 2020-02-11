@@ -118,7 +118,9 @@ const getShowByShowIdAndUserId = async (showId, userId) => {
             shows.id AS show_id,
             title, 
             img_url,
+            user_id,
             username,
+            genre_id,
             genre_name AS genre
         FROM shows JOIN users 
             ON user_id=users.id

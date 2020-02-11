@@ -14,7 +14,7 @@ export default function LoginForm (props) {
                     onChange={props.handleInput}
                 />
             </label>
-            <button className='btn btn-primary mb-2'>Submit</button>
+            <button className='btn btn-primary mb-2'>Login</button>
         </form>
     )
 }

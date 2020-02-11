@@ -4,26 +4,29 @@ import { Link } from 'react-router-dom'
 export default function UserShowCard (props) {
     const imageStyle = {
         margin: '5px',
-        // display: 'block',
-        width: '100px',
-        height: '100px',
-        objectFit: 'scale-down',
+        width: '100%',
         borderRadius: '10px',
     }
 
     return (
-        <div className='card m-3 text-center'>
-            <div className='card-img-top d-flex align-items-center bg-light'>
-                <Link to={`/shows/${props.showId}`}>
-                    <h1>{props.title} of {props.username}</h1>
-                    <img className='img-fluid' src={props.imageUrl} alt={`${props.title}`} style={imageStyle}/>
+        <div className='row'>
+            <Link className='col-6 p-2 m-0' to={`/shows/${props.showId}`}>
+                <img className='' src={props.imageUrl} alt={`${props.title}`} style={imageStyle}/>
+            </Link>
+
+            <div className='col-6 p-2 m-0 text-center'>
+                <Link className='h3 d-block mt-5' to={`/shows/${props.showId}`}>
+                    {props.title}
                 </Link>
-                <div className='col p-2 m-0'>
-                    <Link to={`/genres/${props.genreId}`}>
-                        <h4 className='text-right'>{props.genre}</h4>
-                        <p><strong>{props.commentsCount}</strong> Comments</p>
-                    </Link>
-                </div>
+                <span>Posted by </span>
+                <Link className='h3 d-block' to={`/users/${props.userId}`}>
+                    {props.username}
+                </Link>
+                
+                <Link className='h4 d-block mt-5' to={`/genres/${props.genreId}`}>
+                    {props.genre}
+                </Link>
+                <p><strong>{props.commentsCount}</strong> Comments</p>
             </div>
         </div>
     )
