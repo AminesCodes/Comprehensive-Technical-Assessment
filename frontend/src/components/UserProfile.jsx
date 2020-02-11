@@ -50,7 +50,11 @@ render() {
 
     let userCard = null
     if (this.state.username) {
-        userCard = <UserCard username={this.state.username} avatarUrl={this.state.avatarUrl}/>
+        userCard = <UserCard 
+                        userId={this.state.userId}
+                        username={this.state.username} 
+                        avatarUrl={this.state.avatarUrl}
+                    />
     }
     return(
         <div className=''>

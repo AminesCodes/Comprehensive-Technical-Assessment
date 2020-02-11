@@ -18,7 +18,6 @@ import UserShow from './components/UserShow';
 class App extends React.Component {
   state = {
     username: '',
-    userId: 0,
     networkErr: null,
   }
 
@@ -28,10 +27,9 @@ class App extends React.Component {
     if (this.state.username) {
       try {
         const { data } = await axios.get(`/api/users/${this.state.username}`)
-        console.log(data.payload.id)
         localStorage.setItem('#TV#$how@Watch&List#_UID', data.payload.id)
-        this.setState({ userId: data.payload.id})
         this.props.history.push({ pathname: `/users/${data.payload.id}` })
+
       } catch (err) {
         this.setState({ networkErr: err })
       }
@@ -62,19 +60,18 @@ class App extends React.Component {
 
 
   render() {
+    if (this.state.networkErr) {
+      return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
+    }
+      
     let pageContent = <Home 
         handleFormSubmit={this.handleFormSubmit} 
         inputValue={this.state.username} 
         handleInput={this.handleInput}
       />
 
-      if (this.state.networkErr) {
-        return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
-      }
-      
-      
     const loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID')
-    if (loggedUserId && !this.state.networkErr) {
+    if (loggedUserId) {
       pageContent = 
         <>
           <div className='col-2' style={{height: '100%', backgroundColor: 'beige'}}>

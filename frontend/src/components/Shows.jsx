@@ -49,7 +49,6 @@ export default function Shows (props) {
         return <></>
     }
 
-    console.log(showsList)
     return(
         <>
             {showsList.map((show, index) =>

@@ -33,6 +33,7 @@ export default class Users extends React.PureComponent {
         if (this.state.networkErr) {
             return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
         }
+        
         return(
             <>
                 {this.state.allUsers.map(user =>
