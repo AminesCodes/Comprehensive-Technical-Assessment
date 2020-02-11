@@ -10,12 +10,12 @@ export default function UserShowCard (props) {
 
     return (
         <div className='row'>
-            <Link className='col-6 p-2 m-0' to={`/shows/${props.showId}`}>
+            <Link className='col-6 p-2 m-0' to={`/shows/${props.title}`}>
                 <img className='' src={props.imageUrl} alt={`${props.title}`} style={imageStyle}/>
             </Link>
 
             <div className='col-6 p-2 m-0 text-center'>
-                <Link className='h3 d-block mt-5' to={`/shows/${props.showId}`}>
+                <Link className='h3 d-block mt-5' to={`/shows/${props.title}`}>
                     {props.title}
                 </Link>
                 <span>Posted by </span>

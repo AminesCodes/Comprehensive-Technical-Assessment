@@ -45,7 +45,7 @@ export default class UserShow extends React.PureComponent{
 
     componentDidMount() {
         const showId = (this.props.match.url).split('/')[2]
-        const userId = (this.props.match.url).split('/')[3]
+        const userId = (this.props.match.url).split('/')[4]
         this.getShowInfo(showId, userId)
     }
 
@@ -60,8 +60,9 @@ export default class UserShow extends React.PureComponent{
             }
 
             try {
-                const { data } = await axios.post('/api/comments', requestBody)
-                console.log(data)
+                await axios.post('/api/comments', requestBody)
+                this.getShowInfo(this.state.showId, this.state.targetUserId)
+
             } catch (err) {
                 this.setState({ networkErr: err })
             }

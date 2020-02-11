@@ -31,7 +31,8 @@ const getShowByUserId = async (userId) => {
 const getAllShowsWithAllInfo = async () => {
     const selectQuery = `
         SELECT 
-            title, 
+            title,
+            array_agg(shows.id) AS show_ids,
             array_agg(img_url) AS image_url, 
             array_agg(user_id) AS users_ids, 
             array_agg(username) AS usernames, 
@@ -42,6 +43,24 @@ const getAllShowsWithAllInfo = async () => {
         GROUP BY title
     `
     return await db.any(selectQuery);
+}
+
+const getAllShowsWithAllInfoByTitle = async (title) => {
+    const selectQuery = `
+        SELECT 
+            title,
+            array_agg(shows.id) AS show_ids,
+            array_agg(img_url) AS image_url, 
+            array_agg(user_id) AS users_ids, 
+            array_agg(username) AS usernames, 
+            array_agg(genre_id) AS genre_ids, 
+            array_agg(genre_name) AS genre_names
+        FROM shows JOIN genres ON genre_id=genres.id
+            JOIN users ON user_id=users.id
+        WHERE title=$1
+        GROUP BY title
+    `
+    return await db.one(selectQuery, title);
 }
 
 const getShowByIdWithAllInfo = async (id) => {
@@ -145,4 +164,5 @@ module.exports = {
     getShowByUserIdWithAllInfo,
     getShowByUserIdWithGenreInfo,
     getShowByShowIdAndUserId,
+    getAllShowsWithAllInfoByTitle,
   }

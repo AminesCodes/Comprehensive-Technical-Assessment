@@ -21,10 +21,10 @@ export default function ShowCard (props) {
                     </Link>
                     <p>
                         Being watched by: {props.usersList.map((user, index) => 
-                            <Link 
-                                key={props.usersIds[index]+user+index} 
-                                to={`/users/${props.usersIds[index]}`}
-                            >{user} </Link>
+                            <span key={props.usersIds[index]+user+index} >
+                                <Link to={`/users/${props.usersIds[index]}`}> {user} </Link>
+                                | 
+                            </span>
                         )}
                     </p>
                     <h4 className='text-right'>

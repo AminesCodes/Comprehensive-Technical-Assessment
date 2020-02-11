@@ -14,11 +14,11 @@ export default function ShowThumbnail (props) {
     return (
         <div className='card m-3 text-center'>
             <div className='card-img-top d-flex align-items-center bg-light'>
-                <Link to={`/shows/${props.showId}/${props.userId}`}>
+                <Link to={`/show/${props.showId}/user/${props.userId}`}>
                     <img className='img-fluid' src={props.imageUrl} alt={`${props.title}`} style={imageStyle}/>
                 </Link>
                 <div className='col p-2 m-0'>
-                    <Link to={`/shows/${props.showId}/${props.userId}`}>
+                    <Link to={`/show/${props.showId}/user/${props.userId}`}>
                         <h4>{props.title}</h4>
                     </Link>
                     <Link to={`/genres/${props.genreId}`}>

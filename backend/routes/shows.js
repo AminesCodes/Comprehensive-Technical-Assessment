@@ -93,6 +93,22 @@ router.get('/user/:userId', async (request, response) => {
   }
 });
 
+
+/* GET all shows by title. */
+router.get('/shows/:title', async (request, response) => {
+  const title = request.params.title
+  try {
+    const shows = await showsQuery.getAllShowsWithAllInfoByTitle(title)
+    response.json({
+      error: false,
+      message: `Successfully retrieved all shows: ${title}`,
+      payload: shows
+    })
+  } catch (err) {
+    sendError(response, err)
+  }
+});
+
 /* GET specific for specific user. */
 router.get('/show/:showId/:userId', async (request, response) => {
   const showId = request.params.showId
