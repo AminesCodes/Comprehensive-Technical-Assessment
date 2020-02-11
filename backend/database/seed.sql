@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE genres (
     id SERIAL PRIMARY KEY,
-    genre_name VARCHAR NOT NULL
+    genre_name VARCHAR NOT NULL UNIQUE
 );
 
 CREATE TABLE shows (
@@ -29,11 +29,31 @@ CREATE TABLE comments (
     show_id INT REFERENCES shows(id)
 );
 
--- INSERT GENRES
+-- INSERT GENRES (https://en.wikipedia.org/wiki/List_of_genres)
 INSERT INTO genres (genre_name) VALUES ('Adventure'); -- 1
 INSERT INTO genres (genre_name) VALUES ('Drama'); -- 2
 INSERT INTO genres (genre_name) VALUES ('Comedy'); -- 3
 INSERT INTO genres (genre_name) VALUES ('Fantasy'); -- 4
+INSERT INTO genres (genre_name) VALUES ('Absurdist/surreal/whimsical');
+INSERT INTO genres (genre_name) VALUES ('Action');
+INSERT INTO genres (genre_name) VALUES ('Crime');
+INSERT INTO genres (genre_name) VALUES ('Historical');
+INSERT INTO genres (genre_name) VALUES ('Historical fiction');
+INSERT INTO genres (genre_name) VALUES ('Horror');
+INSERT INTO genres (genre_name) VALUES ('Magical realism');
+INSERT INTO genres (genre_name) VALUES ('Mystery');
+INSERT INTO genres (genre_name) VALUES ('Paranoid fiction');
+INSERT INTO genres (genre_name) VALUES ('Philosophical');
+INSERT INTO genres (genre_name) VALUES ('Political');
+INSERT INTO genres (genre_name) VALUES ('Romance');
+INSERT INTO genres (genre_name) VALUES ('Saga');
+INSERT INTO genres (genre_name) VALUES ('Satire');
+INSERT INTO genres (genre_name) VALUES ('Science fiction');
+INSERT INTO genres (genre_name) VALUES ('Social');
+INSERT INTO genres (genre_name) VALUES ('Speculative');
+INSERT INTO genres (genre_name) VALUES ('Thriller');
+INSERT INTO genres (genre_name) VALUES ('Urban');
+INSERT INTO genres (genre_name) VALUES ('Western');
 
 -- INSERT USERS
 INSERT INTO users (username, avatar_url) VALUES ('Jon Snow', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/kit-harington-hair-jon-snow-1569167827.jpg?crop=0.439xw:0.878xh;0.0221xw,0.0306xh&resize=480:*'); -- 1
