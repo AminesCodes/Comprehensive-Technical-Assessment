@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR NOT NULL UNIQUE,
+    parsed_username VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL,
     avatar_url VARCHAR NOT NULL
 );
 
@@ -61,10 +63,10 @@ INSERT INTO genres (genre_name) VALUES ('Urban');
 INSERT INTO genres (genre_name) VALUES ('Western');
 
 -- INSERT USERS
-INSERT INTO users (username, avatar_url) VALUES ('Jon Snow', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/kit-harington-hair-jon-snow-1569167827.jpg?crop=0.439xw:0.878xh;0.0221xw,0.0306xh&resize=480:*'); -- 1
-INSERT INTO users (username, avatar_url) VALUES ('Daenerys Targaryen', 'https://hips.hearstapps.com/digitalspyuk.cdnds.net/17/36/1504608500-daenerys.jpg?crop=0.665xw:1.00xh;0.0950xw,0&resize=480:*'); -- 2
-INSERT INTO users (username, avatar_url) VALUES ('Michael Scott', 'https://i1.sndcdn.com/avatars-000162505694-i81i0k-t500x500.jpg'); -- 3
-INSERT INTO users (username, avatar_url) VALUES ('Pam Beesly', 'https://i1.sndcdn.com/avatars-000150274248-xnvnyn-t500x500.jpg'); -- 4
+INSERT INTO users (username, parsed_username, password, avatar_url) VALUES ('Jon Snow', 'jonsnow', 'password123', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/kit-harington-hair-jon-snow-1569167827.jpg?crop=0.439xw:0.878xh;0.0221xw,0.0306xh&resize=480:*'); -- 1
+INSERT INTO users (username, parsed_username, password, avatar_url) VALUES ('Daenerys Targaryen', 'daenerystargaryen', 'password123', 'https://hips.hearstapps.com/digitalspyuk.cdnds.net/17/36/1504608500-daenerys.jpg?crop=0.665xw:1.00xh;0.0950xw,0&resize=480:*'); -- 2
+INSERT INTO users (username, parsed_username, password, avatar_url) VALUES ('Michael Scott', 'michaelscott', 'password123', 'https://i1.sndcdn.com/avatars-000162505694-i81i0k-t500x500.jpg'); -- 3
+INSERT INTO users (username, parsed_username, password, avatar_url) VALUES ('Pam Beesly', 'pambeesly', 'password123', 'https://i1.sndcdn.com/avatars-000150274248-xnvnyn-t500x500.jpg'); -- 4
 
 -- INSERT SHOWS
 INSERT INTO shows (title, img_url, user_id, genre_id)
