@@ -40,7 +40,7 @@ export default function Shows (props) {
     }
 
     if (networkErr) {
-        return <Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
+        return < Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
     }
 
     if (showsList.length === 0) {

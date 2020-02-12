@@ -62,7 +62,7 @@ class App extends React.Component {
 
   render() {
     if (this.state.networkErr) {
-      return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
+      return < Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
     }
       
     let pageContent = <Home 
@@ -75,11 +75,11 @@ class App extends React.Component {
     if (loggedUserId) {
       pageContent = 
         <>
-          <div className='col-2' style={{height: '100%', backgroundColor: 'beige'}}>
+          <div className='col-2 sideBar'>
             <SideBar handleLogout={this.handleLogout}/>
           </div>
 
-          <div className='col-10 p-3 overflow-auto' style={{height: '100%'}}>
+          <div className='col-10 p-3 overflow-auto mainContent'>
             <Switch>
               <Route path='/users/:userId' component={UserProfile}></Route>
               <Route path='/users' component={Users}></Route>
@@ -95,12 +95,12 @@ class App extends React.Component {
     }
 
     return (
-      <div className='container-fluid-md' style={{height: '100%'}}>
+      <div className='container-fluid-md myApp'>
         
-        <div className='row' style={{height: '10%', backgroundColor: 'orange'}}>
+        <div className='row topBar'>
           <TopBar />
         </div>
-        <div className='row mx-auto' style={{height: '90%', backgroundColor: 'lightblue'}}>
+        <div className='row mx-auto myPage'>
           {pageContent}
         </div>
       </div>

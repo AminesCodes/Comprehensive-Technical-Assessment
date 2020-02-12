@@ -45,7 +45,7 @@ hideFeedbackDiv = () => {
     
 render() {
     if (this.state.networkErr) {
-        return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
+        return < Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
     }
 
     let userCard = null
@@ -58,8 +58,6 @@ render() {
     }
     return(
         <div className=''>
-            user profile
-            watching list (will have show and genre)
             {userCard}
             <div className='container'>
                 {this.state.showsList.map(show => 

@@ -50,7 +50,7 @@ export default function ShowForm(props) {
     }
 
     if (networkErr) {
-        return <Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
+        return < Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
     }
     
     return (

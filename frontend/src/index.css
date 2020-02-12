@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Frijole&display=swap');
+
 html {
   height: 100%;
 }
@@ -14,4 +16,62 @@ body {
 
 #root {
   height: 100%;
+}
+
+.myApp {
+  height: 100%;
+}
+
+.feedbackContainer {
+  background-color: #C6ECAE;
+  border-radius: 10px;
+}
+
+.topBar {
+  background-image: linear-gradient(to right, #C1069B, #E40313, #FBAF1F);
+  font-family: 'Frijole', cursive;
+  color: whitesmoke;
+}
+
+.sideBar {
+  height: 100%; 
+  background-color: #ED6A5A;
+  font-family: 'Frijole', cursive;
+  color: whitesmoke;
+  text-shadow: 3px 3px 8px #977f7f;
+}
+
+.sideBar a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+.sideBar a:hover {
+  text-decoration: none;
+  font-weight: bolder;
+  color: #000000;
+}
+
+a {
+  text-decoration: none;
+  
+}
+
+a:hover, a:hover h3, a:hover h4, a:hover h5, a:hover span {
+  text-decoration: none;
+  font-weight: bolder;
+  color: #C1069B;
+}
+
+.mainContent {
+  height: 100%;
+}
+
+.myPage {
+  height: 90%; 
+  background-color: #ADBDFF;
+}
+
+.card {
+  background-color: #C6ECAE;
 }

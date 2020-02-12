@@ -79,7 +79,7 @@ export default class UserShow extends React.PureComponent{
 
     render() {
         if (this.state.networkErr) {
-            return <Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
+            return < Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
         }
 
         return(

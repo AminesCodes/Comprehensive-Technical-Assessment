@@ -44,7 +44,7 @@ export default function ShowPage (props) {
     }
 
     if (networkErr) {
-        return <Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
+        return < Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
     }
 
     if (show) {
