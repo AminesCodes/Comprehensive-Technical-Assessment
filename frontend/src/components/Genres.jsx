@@ -22,7 +22,6 @@ export default function Genres (props) {
     const getShowsList = async (genreId) => {
         try {
             const { data } = await axios.get(`/api/shows/genre/${genreId}`)
-            console.log(data.payload)
             setShowsList(data.payload)
         } catch (err) {
             setNetworkErr(err)
