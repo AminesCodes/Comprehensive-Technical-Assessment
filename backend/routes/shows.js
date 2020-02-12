@@ -95,17 +95,19 @@ router.get('/user/:userId', async (request, response) => {
 
 
 /* GET all shows by title. */
-router.get('/shows/:title', async (request, response) => {
-  const title = request.params.title
-  try {
-    const shows = await showsQuery.getAllShowsWithAllInfoByTitle(title)
-    response.json({
-      error: false,
-      message: `Successfully retrieved all shows: ${title}`,
-      payload: shows
-    })
-  } catch (err) {
-    sendError(response, err)
+router.put('/shows', async (request, response) => {
+  const title = request.body.title
+  if (paramChecker(response, title)) {
+    try {
+      const shows = await showsQuery.getAllShowsWithAllInfoByTitle(title)
+      response.json({
+        error: false,
+        message: `Successfully retrieved all shows: ${title}`,
+        payload: shows
+      })
+    } catch (err) {
+      sendError(response, err)
+    }
   }
 });
 

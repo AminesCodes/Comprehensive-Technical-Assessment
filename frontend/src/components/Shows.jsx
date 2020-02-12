@@ -30,9 +30,7 @@ export default function Shows (props) {
     const removeDuplicates = (arr1, arr2) => {
         const tracker = {}
         for (let i=0; i<arr1.length; i++) {
-            if (!tracker[arr1[i]]) {
-                tracker[arr1[i]] = arr2[i]
-            }
+            tracker[arr1[i]] = arr2[i]
         }
         return tracker
     }

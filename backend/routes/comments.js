@@ -8,15 +8,34 @@ const { sendError, idChecker, paramChecker } = require('./helpers/helpers')
 /* GET all comments related a show (showId). */
 router.get('/show/:showId', async (request, response) => {
   const showId = request.params.showId
-  try {
-    const allComments = await commentsQuery.getCommentsByShowIdWithAllInfo(showId)
-    response.json({
-      error: false,
-      message: `Successfully retrieved all comments related to show id ${showId}`,
-      payload: allComments
-    })
-  } catch (err) {
-    sendError(response, err)
+  if (idChecker(response, showId)) {
+    try {
+      const allComments = await commentsQuery.getCommentsByShowIdWithAllInfo(showId)
+      response.json({
+        error: false,
+        message: `Successfully retrieved all comments related to show id ${showId}`,
+        payload: allComments
+      })
+    } catch (err) {
+      sendError(response, err)
+    }
+  }
+});
+
+/* GET all comments related a show (By Title). */
+router.put('/shows/', async (request, response) => {
+  const showTitle = request.body.showTitle
+  if (paramChecker(response, showTitle)) {
+    try {
+      const allComments = await commentsQuery.getCommentsByShowTitleWithAllInfo(showTitle)
+      response.json({
+        error: false,
+        message: `Successfully retrieved all comments related to ${showTitle}`,
+        payload: allComments
+      })
+    } catch (err) {
+      sendError(response, err)
+    }
   }
 });
 

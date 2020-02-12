@@ -35,8 +35,25 @@ const getCommentsByShowIdWithAllInfo = async (showId) => {
     return await db.any(selectQuery, showId);
 }
 
+
+const getCommentsByShowTitleWithAllInfo = async (showTitle) => {
+    const selectQuery = `
+        SELECT 
+            comment_body, 
+            comments.user_id,
+            username, 
+            avatar_url
+        FROM comments JOIN shows on show_id=shows.id
+            JOIN users on comments.user_id=users.id
+        WHERE title=$1
+        ORDER BY comments.id DESC
+    `
+    return await db.any(selectQuery, showTitle);
+}
+
 module.exports = {
     getCommentsByShowId,
     createComment,
     getCommentsByShowIdWithAllInfo,
+    getCommentsByShowTitleWithAllInfo,
   }

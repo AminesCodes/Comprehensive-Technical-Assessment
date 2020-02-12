@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import ShowCard from './ShowCard'
 import Feedback from './Feedback'
+import CommentCard from './CommentCard'
 
 export default function ShowPage (props) {
     const [show, setShow ]= useState(null)
@@ -11,12 +12,14 @@ export default function ShowPage (props) {
 
     const getShowInfo = async (showTitle) => {
         try {
-            const { data } = await axios.get(`/api/shows/shows/${showTitle}`)
+            const { data } = await axios.put('/api/shows/shows', {title: showTitle})
             const genres = removeDuplicates(data.payload.genre_names, data.payload.genre_ids)
             data.payload.genre_names = Object.keys(genres)
-            data.payload.genre_ids = Object.values(genres)  
-            console.log(data.payload)
+            data.payload.genre_ids = Object.values(genres)
             setShow(data.payload)
+            
+            const response = await axios.put('/api/comments/shows', {showTitle: data.payload.title})
+            setComment(response.data.payload)
 
         } catch (err) {
             setNetworkErr(err)
@@ -26,9 +29,7 @@ export default function ShowPage (props) {
     const removeDuplicates = (arr1, arr2) => {
         const tracker = {}
         for (let i=0; i<arr1.length; i++) {
-            if (!tracker[arr1[i]]) {
-                tracker[arr1[i]] = arr2[i]
-            }
+            tracker[arr1[i]] = arr2[i]
         }
         return tracker
     }
@@ -57,6 +58,16 @@ export default function ShowPage (props) {
                     genresIds={show.genre_ids}
                     genresNames={show.genre_names}
                 />
+
+                {comments.map(comment => 
+                    <CommentCard 
+                        key={comment.comment_body+comment.user_id+comment.avatar_url+comment.username}
+                        userId={comment.user_id}
+                        username={comment.username}
+                        avatarUrl={comment.avatar_url}
+                        comment={comment.comment_body}
+                    />
+                )}
             </>
         )
     }
