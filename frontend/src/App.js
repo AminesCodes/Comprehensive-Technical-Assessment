@@ -13,6 +13,7 @@ import ShowForm from './components/ShowForm'
 import UserProfile from './components/UserProfile';
 import UserShow from './components/UserShow';
 import ShowPage from './components/ShowPage';
+import Genres from './components/Genres'
 
 
 
@@ -75,9 +76,9 @@ class App extends React.Component {
     if (loggedUserId) {
       pageContent = 
         <>
-          <div className='col-2 sideBar'>
+          <nav className='col-2 sideBar'>
             <SideBar handleLogout={this.handleLogout}/>
-          </div>
+          </nav>
 
           <div className='col-10 p-3 overflow-auto mainContent'>
             <Switch>
@@ -87,6 +88,8 @@ class App extends React.Component {
               <Route path='/shows/add-show' component={ShowForm}></Route>
               <Route path='/shows/:showName' component={ShowPage}></Route>
               <Route path='/shows' component={Shows}></Route>
+              <Route path='/genres/:genreId' component={Genres}></Route>
+              <Route path='/genres' component={Genres}></Route>
               <Route path='/about' component={About}></Route>
               <Route path='/' component={Home}></Route>
             </Switch>

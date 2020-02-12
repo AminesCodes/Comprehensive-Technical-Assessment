@@ -63,7 +63,7 @@ router.get('/genre/:genreId', async (request, response) => {
   const genreId = request.params.genreId
   if (idChecker(response, genreId)) {
     try {
-      const shows = await showsQuery.getShowByGenreId(genreId)
+      const shows = await showsQuery.getShowByGenreIdWithAllInfo(genreId)
       response.json({
         error: false,
         message: `Successfully retrieved all shows for genre id ${genreId}`,

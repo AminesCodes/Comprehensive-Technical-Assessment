@@ -83,19 +83,19 @@ const getShowByIdWithAllInfo = async (id) => {
 const getShowByGenreIdWithAllInfo = async (genreId) => {
     const selectQuery = `
         SELECT 
-            title, 
-            img_url, 
-            user_id, 
-            genre_id, 
-            username, 
-            avatar_url, 
-            genre_name
+            title,
+            array_agg(shows.id) AS show_ids,
+            array_agg(img_url) AS image_url, 
+            array_agg(user_id) AS users_ids, 
+            array_agg(username) AS usernames, 
+            array_agg(genre_id) AS genre_ids, 
+            array_agg(genre_name) AS genre_names
         FROM shows JOIN genres ON genre_id=genres.id
             JOIN users ON user_id=users.id
         WHERE genre_id=$1
+        GROUP BY title
     `
-    await db.one('SELECT * FROM genres WHERE id=$1', genreId)
-    return await db.any(selectQuery, genreId)
+    return await db.any(selectQuery, genreId);
 }
 
 const getShowByUserIdWithAllInfo = async (userId) => {
