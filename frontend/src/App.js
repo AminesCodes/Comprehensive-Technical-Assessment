@@ -103,7 +103,7 @@ class App extends React.Component {
         <div className='row topBar'>
           <TopBar />
         </div>
-        <div className='row mx-auto myPage'>
+        <div className='row mx-auto overflow-auto myPage'>
           {pageContent}
         </div>
       </div>
