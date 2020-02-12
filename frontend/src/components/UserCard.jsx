@@ -19,7 +19,7 @@ export default function UserCard(props) {
 
     return (
         <div className='card m-3 text-center'>
-            <div className='card-img-top d-flex align-items-center bg-light'>
+            <div className='card-img-top d-flex align-items-center userCard'>
                 <Link to={`/users/${props.userId}`} >
                     <img className='img-fluid' src={props.avatarUrl} alt={`${props.username}'s avatar`} style={avatarStyle}/>
                 </Link>

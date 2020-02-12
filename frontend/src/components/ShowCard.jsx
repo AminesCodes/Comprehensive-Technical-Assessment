@@ -11,7 +11,7 @@ export default function ShowCard (props) {
 
     return (
         <div className='card m-3 text-center'>
-            <div className='card-img-top d-flex align-items-center bg-light'>
+            <div className='card-img-top d-flex align-items-center showCard'>
                 <Link to={`/shows/${props.title}`}>
                     <img className='img-fluid' src={props.imageUrl} alt={`${props.title}`} style={imageStyle}/>
                 </Link>

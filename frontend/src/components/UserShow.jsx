@@ -97,7 +97,7 @@ export default class UserShow extends React.PureComponent{
                     />
                 </div>
 
-                <div className='w-75 mx-auto mt-5'>
+                <div className='w-75 mx-auto mx-5'>
                     <CommentForm 
                         handleFormSubmit={this.handleFormSubmit}
                         handleInput={this.handleInput}

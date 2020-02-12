@@ -28,14 +28,14 @@ body {
 }
 
 .topBar {
-  background-image: linear-gradient(to right, #C1069B, #E40313, #FBAF1F);
+  background-image: linear-gradient(to left, #C1069B, #E40313, #FBAF1F);
   font-family: 'Frijole', cursive;
   color: whitesmoke;
 }
 
 .sideBar {
   height: 100%; 
-  background-color: #ED6A5A;
+  background-color: rgb(118, 175, 141);
   font-family: 'Frijole', cursive;
   color: whitesmoke;
   text-shadow: 3px 3px 8px #977f7f;
@@ -60,7 +60,7 @@ a {
 a:hover, a:hover h3, a:hover h4, a:hover h5, a:hover span {
   text-decoration: none;
   font-weight: bolder;
-  color: #C1069B;
+  color: rgb(148, 8, 120);
 }
 
 .mainContent {
@@ -72,6 +72,10 @@ a:hover, a:hover h3, a:hover h4, a:hover h5, a:hover span {
   background-color: #ADBDFF;
 }
 
-.card {
-  background-color: #C6ECAE;
+.showCard {
+  background-color: #daecce;
+}
+
+.userCard {
+  background-color: #fbffe9;
 }
