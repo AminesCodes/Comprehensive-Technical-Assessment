@@ -151,6 +151,10 @@ const getShowByShowIdAndUserId = async (showId, userId) => {
     return await db.one(selectQuery, [showId, userId])
 }
 
+const getShowByShowTitleAndUserId = async (title, userId) => {
+    return await db.oneOrNone('SELECT * FROM shows WHERE title=$1 AND user_id=$2', [title, userId])
+}
+
 
 module.exports = {
     getAllShows,
@@ -165,4 +169,5 @@ module.exports = {
     getShowByUserIdWithGenreInfo,
     getShowByShowIdAndUserId,
     getAllShowsWithAllInfoByTitle,
+    getShowByShowTitleAndUserId,
   }

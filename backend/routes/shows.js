@@ -45,12 +45,22 @@ router.post('/', async (request, response) => {
       && idChecker(response, genre_id)) {
     try {
       const normTitle = normalizeName(title)
-      const show = await showsQuery.createShow(normTitle, img_url, user_id, genre_id)
-      response.json({
-        error: false,
-        message: 'Successfully created a new show',
-        payload: show
-      })
+      const existingShow = await showsQuery.getShowByShowTitleAndUserId(normTitle, user_id) 
+
+      if (existingShow) {
+        response.status(403).json({
+          error: true,
+          message: 'Show already watched by user',
+          payload: existingShow
+        })
+      } else {
+        const show = await showsQuery.createShow(normTitle, img_url, user_id, genre_id)
+        response.json({
+          error: false,
+          message: 'Successfully created a new show',
+          payload: show
+        })
+      }
     } catch (err) {
       sendError(response, err)
     }
