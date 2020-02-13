@@ -14,6 +14,7 @@ import UserProfile from './components/UserProfile';
 import UserShow from './components/UserShow';
 import ShowPage from './components/ShowPage';
 import Genres from './components/Genres'
+import Profile from './components/Profile';
 
 
 
@@ -130,6 +131,9 @@ class App extends React.Component {
               </Route>
               <Route path='/users' render={routeProps => 
                 <Users loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/profile' render={routeProps => 
+                <Profile loggedUser={loggedUser} handleLogout={this.handleLogout} {...routeProps} />} >
               </Route>
               <Route path='/show/:showId/user/:userId' render={routeProps => 
                 <UserShow loggedUser={loggedUser} {...routeProps} />} >

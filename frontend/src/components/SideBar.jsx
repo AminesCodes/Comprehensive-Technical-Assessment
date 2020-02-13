@@ -9,6 +9,9 @@ export default function SideBar(props) {
                     <NavLink className='nav-link d-block m-2' to='/' > Home </NavLink>
                 </li>
                 <li className='nav-item'>
+                    <NavLink className='nav-link d-block m-2' to='/profile' > Profile </NavLink>
+                </li>
+                <li className='nav-item'>
                     <NavLink className='d-block m-2' to='/users' > Users </NavLink>
                 </li>
                 <li className='nav-item'>
