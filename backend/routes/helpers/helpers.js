@@ -69,9 +69,14 @@ const normalizeName = str => {
   return str; 
 }
 
+const formatUsername = username => {
+  return username.toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
 module.exports = {
     sendError,
     idChecker,
     paramChecker,
     normalizeName,
+    formatUsername,
 }
