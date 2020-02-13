@@ -26,9 +26,10 @@ export default function ShowForm(props) {
     const handleSubmitShowForm = async (event) => {
         event.preventDefault()
         
-        if (showURL && showName && parseInt(showGenreId)) {
+        if (props.loggedUser && showURL && showName && parseInt(showGenreId)) {
             try {
-                const loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID')
+                // const loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID')
+                const loggedUserId = props.loggedUser.id
                 const newShowInfo = { 
                     title: showName, 
                     img_url: showURL, 

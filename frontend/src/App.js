@@ -73,13 +73,19 @@ class App extends React.Component {
     this.setState({networkErr: null})
   }
 
-  handleLogout = () => {
-    localStorage.removeItem('#TV#$how@Watch&List#_UID')
-    this.setState({
-      username: '',
-      userId: 0,
-      networkErr: null,
-    })
+  handleLogout = async () => {
+    try {
+      await axios.get('/api/auth/logout')
+      this.setState({
+        username: '',
+        password: '',
+        avatarUrl: '',
+        formType: 'login',
+        loggedUser: null,
+      })
+    } catch (err) {
+      this.setState({ networkErr: err })
+    }
   }
 
 

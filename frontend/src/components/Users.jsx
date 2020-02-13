@@ -28,7 +28,11 @@ export default class Users extends React.PureComponent {
     }
 
     render() {
-        const loggedUserId = parseInt(localStorage.getItem('#TV#$how@Watch&List#_UID'))
+        // const loggedUserId = parseInt(localStorage.getItem('#TV#$how@Watch&List#_UID'))
+        let loggedUserId = 0
+        if (this.props.loggedUser) {
+            loggedUserId = this.props.loggedUser.id
+        }
 
         if (this.state.networkErr) {
             return < Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>

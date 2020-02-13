@@ -52,10 +52,11 @@ export default class UserShow extends React.PureComponent{
     handleFormSubmit = async (event) => {
         event.preventDefault()
 
-        if (this.state.comment && this.state.showId) {
+        if (this.state.loggedUser && this.state.comment && this.state.showId) {
             const requestBody = { 
                 comment_body: this.state.comment, 
-                user_id: localStorage.getItem('#TV#$how@Watch&List#_UID'), 
+                // user_id: localStorage.getItem('#TV#$how@Watch&List#_UID'), 
+                user_id: this.state.loggedUser.id, 
                 show_id: this.state.showId
             }
 
