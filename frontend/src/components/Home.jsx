@@ -4,11 +4,17 @@ import LoginForm from './LoginForm'
 import About from './About'
 
 export default function Home (props) {
-    const loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID') 
+    let loggedUserId = 0
+    if (props.loggedUser) {
+        // loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID') 
+        loggedUserId = props.loggedUser.id
+    }
     let form = null
     if (!loggedUserId) {
         form = <LoginForm
-        handleFormSubmit={props.handleFormSubmit} 
+        handleFormSubmit={props.handleFormSubmit}
+        formType={props.formType}
+        handleTypeOfForm={props.handleTypeOfForm} 
         username={props.username} 
         handleInput={props.handleInput}
       />
@@ -16,8 +22,10 @@ export default function Home (props) {
 
     return(
         <>
-            {form}
-            <h2 className='text-center m-4'>Welcome to TV Show WatchList App</h2>
+            <div className='text-center m-4 mx-auto'>
+                {form}
+            </div>
+            <h2 className='text-center m-4 mx-auto'>Welcome to TV Show WatchList App</h2>
             <img 
                 className='d-block w-75 mx-auto'
                 src={require('../assets/Best-TV-Shows.jpg')} 

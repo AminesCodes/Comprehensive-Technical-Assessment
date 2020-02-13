@@ -20,16 +20,39 @@ import Genres from './components/Genres'
 class App extends React.Component {
   state = {
     username: '',
+    password: '',
+    avatarUrl: '',
+    formType: 'login',
+    loggedUser: null,
     networkErr: null,
+  }
+
+  async componentDidMount() {
+    try {
+      const { data } = await axios.get('/api/auth/isUserLoggedIn')
+      this.setState({ loggedUser: data.payload })
+    } catch (err) {
+      if (err.response.data.message !== 'You need to be logged in') {
+        this.setState({ networkErr: err })
+      } 
+    }
   }
 
   handleFormSubmit = async (event) => {
     event.preventDefault()
 
-    if (this.state.username) {
+    const { username, password, avatarUrl, formType } = this.state
+    if (username && password && formType === 'login') {
       try {
-        const { data } = await axios.get(`/api/users/${this.state.username}`)
-        localStorage.setItem('#TV#$how@Watch&List#_UID', data.payload.id)
+        const { data } = await axios.post(`/api/auth/login`, {username, password})
+        console.log(data)
+        this.setState({
+          username: '',
+          password: '',
+          avatarUrl: '',
+          loggedUser: data.payload,
+        })
+        // localStorage.setItem('#TV#$how@Watch&List#_UID', data.payload.id)
         this.props.history.push({ pathname: `/users/${data.payload.id}` })
 
       } catch (err) {
@@ -38,9 +61,8 @@ class App extends React.Component {
     }
   }
 
-  handleSubmitShowForm = async (event) => {
-    event.preventDefault()
-
+  handleTypeOfForm = (type) => {
+    this.setState({formType: type})
   }
 
   handleInput = event => {
@@ -62,18 +84,20 @@ class App extends React.Component {
 
 
   render() {
+    const { loggedUser } = this.state
     if (this.state.networkErr) {
       return < Feedback err={this.state.networkErr} hideFeedbackDiv={this.hideFeedbackDiv}/>
     }
       
     let pageContent = <Home 
         handleFormSubmit={this.handleFormSubmit} 
+        formType={this.state.formType}
+        handleTypeOfForm={this.handleTypeOfForm}
         inputValue={this.state.username} 
         handleInput={this.handleInput}
       />
 
-    const loggedUserId = localStorage.getItem('#TV#$how@Watch&List#_UID')
-    if (loggedUserId) {
+    if (loggedUser) {
       pageContent = 
         <>
           <nav className='col-2 sideBar'>
@@ -82,16 +106,36 @@ class App extends React.Component {
 
           <div className='col-10 p-3 overflow-auto mainContent'>
             <Switch>
-              <Route path='/users/:userId' component={UserProfile}></Route>
-              <Route path='/users' component={Users}></Route>
-              <Route path='/show/:showId/user/:userId' component={UserShow}></Route>
-              <Route path='/shows/add-show' component={ShowForm}></Route>
-              <Route path='/shows/:showName' component={ShowPage}></Route>
-              <Route path='/shows' component={Shows}></Route>
-              <Route path='/genres/:genreId' component={Genres}></Route>
-              <Route path='/genres' component={Genres}></Route>
-              <Route path='/about' component={About}></Route>
-              <Route path='/' component={Home}></Route>
+              <Route path='/users/:userId' render={routeProps => 
+                <UserProfile loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/users' render={routeProps => 
+                <Users loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/show/:showId/user/:userId' render={routeProps => 
+                <UserShow loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/shows/add-show' render={routeProps => 
+                <ShowForm loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/shows/:showName' render={routeProps => 
+                <ShowPage loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/shows' render={routeProps => 
+                <Shows loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/genres/:genreId' render={routeProps => 
+                <Genres loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/genres' render={routeProps => 
+                <Genres loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/about' render={routeProps => 
+                <About loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
+              <Route path='/' render={routeProps => 
+                <Home loggedUser={loggedUser} {...routeProps} />} >
+              </Route>
             </Switch>
           </div>
         </>
