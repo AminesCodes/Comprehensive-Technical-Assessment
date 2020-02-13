@@ -45,7 +45,6 @@ class App extends React.Component {
     if (username && password && formType === 'login') {
       try {
         const { data } = await axios.post(`/api/auth/login`, {username, password})
-        console.log(data)
         this.setState({
           username: '',
           password: '',
@@ -53,6 +52,20 @@ class App extends React.Component {
           loggedUser: data.payload,
         })
         // localStorage.setItem('#TV#$how@Watch&List#_UID', data.payload.id)
+        this.props.history.push({ pathname: `/users/${data.payload.id}` })
+
+      } catch (err) {
+        this.setState({ networkErr: err })
+      }
+    } else if (username && password && avatarUrl && formType === 'sign-up') {
+      try {
+        const { data } = await axios.post(`/api/auth/signup`, {username, password, avatarUrl})
+        this.setState({
+          username: '',
+          password: '',
+          avatarUrl: '',
+          loggedUser: data.payload,
+        })
         this.props.history.push({ pathname: `/users/${data.payload.id}` })
 
       } catch (err) {
