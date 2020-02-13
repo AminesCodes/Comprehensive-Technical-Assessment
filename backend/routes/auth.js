@@ -85,12 +85,10 @@ const updateUser = async (request, response, next) => {
         if (parseInt(userId) === request.user.id && password) {
             if (newPassword) {
                 const hashedPassword = await hashPassword(newPassword)
-                const user = await usersQuery.updateAllUserInfo(userId, username, parsedUsername, hashedPassword, avatarUrl)
-                console.log(user)
+                await usersQuery.updateAllUserInfo(userId, username, parsedUsername, hashedPassword, avatarUrl)
                 request.body.password = newPassword
             } else {
                 await usersQuery.updateUserInfo(userId, username, parsedUsername, avatarUrl)
-                console.log(1000)
             }
             next()
         } else {

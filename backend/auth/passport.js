@@ -15,7 +15,6 @@ passport.use(new LocalStrategy({usernameField: 'username', passwordField : 'pass
     }
 
     const passwordMatch = await comparePasswords(password, user.password);
-    console.log(password, user.password)
     if (!passwordMatch) { // user found but passwords don't match
         console.log('user found but passwords do not match')
         return done(null, false)
@@ -30,12 +29,10 @@ passport.use(new LocalStrategy({usernameField: 'username', passwordField : 'pass
 }))
 
 passport.serializeUser((user, done) => {
-    console.log('serializeUser')
   done(null, user)
 })
 
 passport.deserializeUser(async (user, done) => {
-    console.log('deserializeUser')
   try {
     let retrievedUser = await usersQueries.getUserById(user.id)
     delete retrievedUser.password;
