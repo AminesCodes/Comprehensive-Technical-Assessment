@@ -126,7 +126,7 @@ router.put('/update/:userId', checkUserLogged, updateUser, passport.authenticate
     })
 })
 
-router.delete('/:userId', checkUserLogged, async (request, response) => {
+router.patch('/delete/:userId', checkUserLogged, async (request, response) => {
     const userId = request.params.userId
     if (parseInt(userId) === request.user.id) {
         try {
