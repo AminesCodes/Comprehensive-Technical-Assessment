@@ -25,15 +25,15 @@ CREATE TABLE shows (
     id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL,
     img_url VARCHAR NOT NULL,
-    user_id INT REFERENCES users(id),
-    genre_id INT REFERENCES genres(id)
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    genre_id INT REFERENCES genres(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     comment_body VARCHAR NOT NULL,
-    user_id INT REFERENCES users(id),
-    show_id INT REFERENCES shows(id)
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    show_id INT REFERENCES shows(id) ON DELETE CASCADE
 );
 
 -- INSERT GENRES (https://en.wikipedia.org/wiki/List_of_genres)

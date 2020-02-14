@@ -37,7 +37,7 @@ export default function Profile(props) {
 
     const deleteAccount = async () => {
         try {
-            await axios.patch(`/api/auth/delete/${props.loggedUser.id}`)
+            await axios.delete(`/api/auth/${props.loggedUser.id}`)
             props.handleLogout()
 
         } catch (err) {
