@@ -58,7 +58,7 @@ export default function LoginForm (props) {
                 onChange={props.handleInput}
             />
             
-            <button className='btn btn-primary mb-2'>Login</button>
+            <button className='btn btn-primary mb-2'>Sign up</button>
             <span className='mb-2 mx-2 mr-sm-2'>Already a user?
                 <span className='btn btn-link' onClick={() => props.handleTypeOfForm('login')}>Login</span>
             </span>
