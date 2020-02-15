@@ -1,6 +1,13 @@
 import React from 'react'
 
 export default function CommentForm (props) {
+    const onEnterPress = (event) => {
+        if(event.keyCode === 13 && event.shiftKey === false) {
+          event.preventDefault();
+          props.handleFormSubmit(event);
+        }
+    }
+
     return(
         <form className='form w-100' onSubmit={props.handleFormSubmit}>
             <textarea 
@@ -12,6 +19,7 @@ export default function CommentForm (props) {
                 placeholder='Enter your comment here'
                 value={props.inputValue}
                 onChange={props.handleInput}
+                onKeyDown={onEnterPress}
             />
             <button className='btn btn-primary mb-2 mx-auto'>Submit</button>
         </form>

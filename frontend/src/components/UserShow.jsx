@@ -62,6 +62,7 @@ export default class UserShow extends React.PureComponent{
 
             try {
                 await axios.post('/api/comments', requestBody)
+                this.setState({comment: ''})
                 this.getShowInfo(this.state.showId, this.state.targetUserId)
 
             } catch (err) {
