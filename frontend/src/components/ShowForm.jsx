@@ -83,7 +83,7 @@ export default function ShowForm(props) {
                 </div>
 
                 <div className='form-group'>
-                    <label>Show Image URL:
+                    <label>Genre:
                         <select 
                             className='form-control'
                             name='showType'
