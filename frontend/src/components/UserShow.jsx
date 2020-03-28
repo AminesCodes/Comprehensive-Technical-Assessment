@@ -27,6 +27,7 @@ export default class UserShow extends React.PureComponent{
             promises.push(axios.get(`/api/comments/show/${showId}`))
 
             const [ show, comments ] = await Promise.all(promises)
+            console.log(10000, comments)
             
             this.setState({
                 showId: show.data.payload.show_id,
@@ -108,7 +109,7 @@ export default class UserShow extends React.PureComponent{
                     {this.state.showComments.map(comment => 
                         <CommentCard 
                             key={comment.targetUsername+comment.title+comment.comment_body}
-                            userId={comment.userId}
+                            userId={comment.user_id}
                             username={comment.username}
                             avatarUrl={comment.avatar_url}
                             comment={comment.comment_body}

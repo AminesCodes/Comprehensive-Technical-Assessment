@@ -105,9 +105,11 @@ router.get('/user/:userId', async (request, response) => {
 
 
 /* GET all shows by title. */
-router.put('/shows', async (request, response) => {
-  const title = request.body.title
+router.get('/show/:title', async (request, response) => {
+  const title = request.params.title
+  console.log(title)
   if (paramChecker(response, title)) {
+    console.log("TEST PASSED")
     try {
       const shows = await showsQuery.getAllShowsWithAllInfoByTitle(title)
       response.json({
@@ -123,6 +125,7 @@ router.put('/shows', async (request, response) => {
 
 /* GET specific for specific user. */
 router.get('/show/:showId/:userId', async (request, response) => {
+  console.log('wrong route')
   const showId = request.params.showId
   const userId = request.params.userId
   if (idChecker(response, userId) && idChecker(response, userId)) {

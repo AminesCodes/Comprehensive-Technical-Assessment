@@ -23,8 +23,8 @@ router.get('/show/:showId', async (request, response) => {
 });
 
 /* GET all comments related a show (By Title). */
-router.put('/shows/', async (request, response) => {
-  const showTitle = request.body.showTitle
+router.get('/shows/title/:title', async (request, response) => {
+  const showTitle = request.params.title
   if (paramChecker(response, showTitle)) {
     try {
       const allComments = await commentsQuery.getCommentsByShowTitleWithAllInfo(showTitle)

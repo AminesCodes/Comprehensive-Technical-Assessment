@@ -7,19 +7,19 @@ import CommentCard from './CommentCard'
 
 export default function ShowPage (props) {
     const [show, setShow ]= useState(null)
-    const [comments, setComment] = useState([])
+    const [comments, setComments] = useState([])
     const [networkErr, setNetworkErr] = useState(null)
 
     const getShowInfo = async (showTitle) => {
         try {
-            const { data } = await axios.put('/api/shows/shows', {title: showTitle})
+            const { data } = await axios.get(`/api/shows/show/${showTitle}`)
             const genres = removeDuplicates(data.payload.genre_names, data.payload.genre_ids)
             data.payload.genre_names = Object.keys(genres)
             data.payload.genre_ids = Object.values(genres)
             setShow(data.payload)
             
-            const response = await axios.put('/api/comments/shows', {showTitle: data.payload.title})
-            setComment(response.data.payload)
+            const response = await axios.get(`/api/comments/shows/title/${showTitle}`)
+            setComments(response.data.payload)
 
         } catch (err) {
             setNetworkErr(err)
