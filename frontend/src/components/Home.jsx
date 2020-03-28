@@ -25,7 +25,7 @@ export default function Home (props) {
             <div className='text-center m-4 mx-auto'>
                 {form}
             </div>
-            <h2 className='text-center m-4 mx-auto'>Welcome to TV Show WatchList App</h2>
+            <h2 className='text-center m-4 mx-auto'>Welcome to TV Show WatchList</h2>
             <img 
                 className='d-block w-75 mx-auto'
                 src={require('../assets/Best-TV-Shows.jpg')} 

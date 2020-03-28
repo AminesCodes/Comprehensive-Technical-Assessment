@@ -5,7 +5,7 @@ export default function About (props) {
     return(
         <div className='container mt-5'>
             <h2 className='text-center'>About</h2>
-            <h3 className='text-center m-5'>TV Show WatchList App</h3>
+            <h3 className='text-center m-5'>TV Show WatchList</h3>
             <p>TV Show WatchList is an app designed to helps people decide what to watch next, 
                 mostly by reading comments on a selected show or just by referring to how many users 
                 have watched it.

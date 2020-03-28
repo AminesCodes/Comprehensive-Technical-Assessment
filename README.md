@@ -12,7 +12,7 @@ This exam, like many exams before it, will be an **open-book, project-driven exa
 - You are welcome (encouraged, required) to utilize GitHub and Git for this exam. Until the conclusion of the exam period, please **make your repositories private** and invite the staff as collaborators to your repo.
 - As you continue to work through this project make regular commits because we will be monitoring your commit history for code consistency and educational integrity.
 
-## TV Show Watchlist App
+## TV Show WatchList
 
 TV Show Watchlist will be a full-stack application where users can post, comment on, and favorite TV shows that they are binging on.
 

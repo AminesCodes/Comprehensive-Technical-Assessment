@@ -11,7 +11,7 @@ export default function TopBar(props) {
                     style={{height: '50px', objectFit: 'scale-down'}}/>
             </div>
             <div className='col-9 mt-3 h3 text-center'>
-                TV Show WatchList App
+                TV Show WatchList
             </div>
         </>
     )
