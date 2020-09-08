@@ -1,122 +1,72 @@
 const db = require('../database/db');
 
+const { formatInputStr } = require('../routes/helpers/helpers');
+
+const selectQuery = `
+    SELECT 
+        title,
+        shows.id AS show_id,
+        img_url, 
+        array_agg(user_id) AS users_ids, 
+        array_agg(username) AS usernames, 
+        genre_id, 
+        genre_name
+    FROM shows 
+        JOIN genres ON genre_id=genres.id
+        JOIN shows_users ON shows.id=shows_users.show_id
+        JOIN users ON user_id=users.id
+    `
+const groupClause = 
+    `
+        GROUP BY title, shows.id, genre_name
+    `
+
 const getAllShows = async () => {
-    return await db.any('SELECT * FROM shows');
+    return await db.any(selectQuery + groupClause);
 }
 
 const getShowById = async (id) => {
-    return await db.one('SELECT * FROM shows WHERE id=$1', id)
+    return await db.one(selectQuery + 'WHERE shows.id=$1' + groupClause, id);
 }
 
+const getShowByTitle = async (title) => {
+    const formattedTitle = formatInputStr(title);
+    return await db.one(selectQuery + 'WHERE formatted_title=$1' + groupClause, formattedTitle);
+}
+
+
 const createShow = async (title, imgUrl, userId, genreId) => {
+    const formattedTitle = formatInputStr(title);
+    let showId = await db.oneOrNone('SELECT id FROM shows WHERE formatted_title=$1', formattedTitle);
+
+    if (!showId) {
+        const insertQuery = `
+            INSERT INTO shows (title, formatted_title, img_url, genre_id)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id
+        `
+        showId = await db.one(insertQuery, [title, formattedTitle, imgUrl, genreId]);
+    }
+
     const insertQuery = `
-        INSERT INTO shows (title, img_url, user_id, genre_id)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO shows_users (show_id, user_id)
+        VALUES ($1, $2)
         RETURNING *
-    `
-    return await db.one(insertQuery, [title, imgUrl, userId, genreId])
+    `;
+    return await db.one(insertQuery, [showId.id, userId]);
 }
 
 const getShowByGenreId = async (genreId) => {
-    await db.one('SELECT * FROM genres WHERE id=$1', genreId)
-    return await db.any('SELECT * FROM shows WHERE genre_id=$1', genreId)
+    // Check to see if a genre exist, will throw an error of non-existing id
+    await db.one('SELECT * FROM genres WHERE id=$1', genreId);
+
+    return await db.any(selectQuery + 'WHERE genre_id=$1' + groupClause, genreId)
 }
 
 const getShowByUserId = async (userId) => {
-    await db.one('SELECT * FROM users WHERE id=$1', userId)
-    return await db.any('SELECT * FROM shows WHERE user_id=$1', userId)
-}
+    // Check to see if a user exist, will throw an error of non-existing id
+    await db.one('SELECT * FROM users WHERE id=$1', userId);
 
-//#########################################################################
-const getAllShowsWithAllInfo = async () => {
-    const selectQuery = `
-        SELECT 
-            title,
-            array_agg(shows.id) AS show_ids,
-            array_agg(img_url) AS image_url, 
-            array_agg(user_id) AS users_ids, 
-            array_agg(username) AS usernames, 
-            array_agg(genre_id) AS genre_ids, 
-            array_agg(genre_name) AS genre_names
-        FROM shows JOIN genres ON genre_id=genres.id
-            JOIN users ON user_id=users.id
-        GROUP BY title
-    `
-    return await db.any(selectQuery);
-}
-
-const getAllShowsWithAllInfoByTitle = async (title) => {
-    const selectQuery = `
-        SELECT 
-            title,
-            array_agg(shows.id) AS show_ids,
-            array_agg(img_url) AS image_url, 
-            array_agg(user_id) AS users_ids, 
-            array_agg(username) AS usernames, 
-            array_agg(genre_id) AS genre_ids, 
-            array_agg(genre_name) AS genre_names
-        FROM shows JOIN genres ON genre_id=genres.id
-            JOIN users ON user_id=users.id
-        WHERE title=$1
-        GROUP BY title
-    `
-    return await db.one(selectQuery, title);
-}
-
-const getShowByIdWithAllInfo = async (id) => {
-    const selectQuery = `
-        SELECT 
-            title, 
-            img_url, 
-            user_id, 
-            genre_id, 
-            username, 
-            avatar_url, 
-            genre_name
-        FROM shows JOIN genres ON genre_id=genres.id
-            JOIN users ON user_id=users.id
-        WHERE id=$1
-    `
-    return await db.one(selectQuery, id)
-}
-
-const getShowByGenreIdWithAllInfo = async (genreId) => {
-    const selectQuery = `
-        SELECT 
-            title,
-            array_agg(shows.id) AS show_ids,
-            array_agg(img_url) AS image_url, 
-            array_agg(user_id) AS users_ids, 
-            array_agg(username) AS usernames, 
-            array_agg(genre_id) AS genre_ids, 
-            array_agg(genre_name) AS genre_names
-        FROM shows JOIN genres ON genre_id=genres.id
-            JOIN users ON user_id=users.id
-        WHERE genre_id=$1
-        GROUP BY title
-    `
-    return await db.any(selectQuery, genreId);
-}
-
-const getShowByUserIdWithAllInfo = async (userId) => {
-    const selectQuery = `
-        SELECT 
-            title, 
-            img_url, 
-            user_id, 
-            genre_id, 
-            username, 
-            avatar_url, 
-            genre_name
-        FROM shows JOIN genres ON genre_id=genres.id
-            JOIN users ON user_id=users.id
-        WHERE user_id=$1
-        `
-    await db.one('SELECT * FROM users WHERE id=$1', userId)
-    return await db.any(selectQuery, userId)
-}
-
-const getShowByUserIdWithGenreInfo = async (userId) => {
     const selectQuery = `
         SELECT 
             shows.id as show_id,
@@ -124,11 +74,10 @@ const getShowByUserIdWithGenreInfo = async (userId) => {
             img_url, 
             genre_id,  
             genre_name
-        FROM shows JOIN genres ON genre_id=genres.id
+        FROM shows_users JOIN shows ON show_id=shows.id JOIN genres ON genre_id=genres.id
         WHERE user_id=$1
-        `
-    await db.one('SELECT * FROM users WHERE id=$1', userId)
-    return await db.any(selectQuery, userId)
+    `
+    return await db.any(selectQuery, userId);
 }
 
 const getShowByShowIdAndUserId = async (showId, userId) => {
@@ -141,33 +90,23 @@ const getShowByShowIdAndUserId = async (showId, userId) => {
             username,
             genre_id,
             genre_name AS genre
-        FROM shows JOIN users 
-            ON user_id=users.id
-            JOIN genres
-            ON genre_id = genres.id
+        FROM shows 
+            JOIN shows_users ON shows_users.show_id=shows.id
+            JOIN users ON user_id=users.id
+            JOIN genres ON genre_id = genres.id
         WHERE shows.id=$1 
             AND user_id=$2
         `
     return await db.one(selectQuery, [showId, userId])
 }
 
-const getShowByShowTitleAndUserId = async (title, userId) => {
-    return await db.oneOrNone('SELECT * FROM shows WHERE title=$1 AND user_id=$2', [title, userId])
-}
-
 
 module.exports = {
     getAllShows,
     getShowById,
+    getShowByTitle,
     createShow,
     getShowByGenreId,
     getShowByUserId,
-    getAllShowsWithAllInfo,
-    getShowByIdWithAllInfo,
-    getShowByGenreIdWithAllInfo,
-    getShowByUserIdWithAllInfo,
-    getShowByUserIdWithGenreInfo,
     getShowByShowIdAndUserId,
-    getAllShowsWithAllInfoByTitle,
-    getShowByShowTitleAndUserId,
   }

@@ -8,7 +8,7 @@ const { sendError, idChecker, paramChecker, normalizeName } = require('./helpers
 /* GET shows listing. */
 router.get('/', async (request, response) => {
   try {
-    const allShows = await showsQuery.getAllShowsWithAllInfo()
+    const allShows = await showsQuery.getAllShows()
     response.json({
       error: false,
       message: 'Successfully retrieved all shows',
@@ -45,22 +45,13 @@ router.post('/', async (request, response) => {
       && idChecker(response, genre_id)) {
     try {
       const normTitle = normalizeName(title)
-      const existingShow = await showsQuery.getShowByShowTitleAndUserId(normTitle, user_id) 
+      const show = await showsQuery.createShow(normTitle, img_url, user_id, genre_id)
+      response.json({
+        error: false,
+        message: 'Successfully created a new show',
+        payload: show
+      })
 
-      if (existingShow) {
-        response.status(403).json({
-          error: true,
-          message: 'Show already watched by user',
-          payload: existingShow
-        })
-      } else {
-        const show = await showsQuery.createShow(normTitle, img_url, user_id, genre_id)
-        response.json({
-          error: false,
-          message: 'Successfully created a new show',
-          payload: show
-        })
-      }
     } catch (err) {
       sendError(response, err)
     }
@@ -73,7 +64,7 @@ router.get('/genre/:genreId', async (request, response) => {
   const genreId = request.params.genreId
   if (idChecker(response, genreId)) {
     try {
-      const shows = await showsQuery.getShowByGenreIdWithAllInfo(genreId)
+      const shows = await showsQuery.getShowByGenreId(genreId)
       response.json({
         error: false,
         message: `Successfully retrieved all shows for genre id ${genreId}`,
@@ -91,7 +82,7 @@ router.get('/user/:userId', async (request, response) => {
   const userId = request.params.userId
   if (idChecker(response, userId)) {
     try {
-      const shows = await showsQuery.getShowByUserIdWithGenreInfo(userId)
+      const shows = await showsQuery.getShowByUserId(userId)
       response.json({
         error: false,
         message: `Successfully retrieved all shows for user id ${userId}`,
@@ -107,11 +98,9 @@ router.get('/user/:userId', async (request, response) => {
 /* GET all shows by title. */
 router.get('/show/:title', async (request, response) => {
   const title = request.params.title
-  console.log(title)
   if (paramChecker(response, title)) {
-    console.log("TEST PASSED")
     try {
-      const shows = await showsQuery.getAllShowsWithAllInfoByTitle(title)
+      const shows = await showsQuery.getShowByTitle(title)
       response.json({
         error: false,
         message: `Successfully retrieved all shows: ${title}`,
@@ -123,9 +112,8 @@ router.get('/show/:title', async (request, response) => {
   }
 });
 
-/* GET specific for specific user. */
+/* GET specific show for specific user. */
 router.get('/show/:showId/:userId', async (request, response) => {
-  console.log('wrong route')
   const showId = request.params.showId
   const userId = request.params.userId
   if (idChecker(response, userId) && idChecker(response, userId)) {

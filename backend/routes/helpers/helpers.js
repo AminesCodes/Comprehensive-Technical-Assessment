@@ -1,9 +1,16 @@
 const sendError = (response, err) => {
-    if (err.code === "23505" && err.detail.includes("already exists")) {
+    if (err.code === "23505" && err.detail.includes("already exists") && err.table === 'users') {
       console.log('Attempt to register a new user with a taken email/username')
       response.status(403).json({
         error: true,
         message: 'Username already registered',
+        payload: null,
+      }) 
+    } else if (err.code === "23505" && err.detail.includes("already exists") && err.table === 'shows_users') {
+      console.log('Attempt to register a new user with a taken email/username')
+      response.status(403).json({
+        error: true,
+        message: 'Show already registered to your list',
         payload: null,
       }) 
     } else if (err.message === 'No data returned from the query.') {
@@ -14,6 +21,7 @@ const sendError = (response, err) => {
         payload: null,
       }) 
     } else if (err.code === '23503') {
+      console.log('Query reference error')
       response.status(403).json({
         error: true,
         message: 'Reference error!',
@@ -69,7 +77,7 @@ const normalizeName = str => {
   return str; 
 }
 
-const formatUsername = username => {
+const formatInputStr = username => {
   return username.toLowerCase().replace(/[^a-z0-9]/g, '')
 }
 
@@ -78,5 +86,5 @@ module.exports = {
     idChecker,
     paramChecker,
     normalizeName,
-    formatUsername,
+    formatInputStr,
 }

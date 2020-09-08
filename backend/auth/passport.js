@@ -3,11 +3,11 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const { comparePasswords } = require('./helpers');
 const usersQueries = require('../queries/users');
-const { formatUsername } = require('../routes/helpers/helpers')
+const { formatInputStr } = require('../routes/helpers/helpers')
 
 passport.use(new LocalStrategy({usernameField: 'username', passwordField : 'password'}, async (username, password, done) => {
   try {
-      const parsedUsername = formatUsername(username)
+      const parsedUsername = formatInputStr(username)
     const user = await usersQueries.getUserByUsername(parsedUsername);
     if (!user) { // user not found in the database
       console.log('user not found in the database')

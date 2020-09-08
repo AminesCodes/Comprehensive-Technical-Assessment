@@ -4,7 +4,7 @@ const router = express.Router();
 const usersQuery = require('../queries/users')
 const passport = require('../auth/passport')
 const { hashPassword , checkUserLogged } = require('../auth/helpers')
-const { sendError, idChecker, paramChecker, formatUsername } = require('./helpers/helpers')
+const { sendError, idChecker, paramChecker, formatInputStr } = require('./helpers/helpers')
 
 // LOGIN A USER
 router.post('/login', passport.authenticate('local'), (request, response) => {
@@ -24,7 +24,7 @@ const signupUser = async (request, response, next) => {
         && paramChecker(response, avatarUrl) 
         ) {
         try {
-            const parsedUsername = formatUsername(username)
+            const parsedUsername = formatInputStr(username)
             const hashedPassword = await hashPassword(password)
             await usersQuery.createUser(username, parsedUsername, hashedPassword, avatarUrl)
             next()
@@ -81,7 +81,7 @@ const updateUser = async (request, response, next) => {
     const password = request.body.password 
     let newPassword = request.body.newPassword
     try {
-        const parsedUsername = formatUsername(username)
+        const parsedUsername = formatInputStr(username)
         if (parseInt(userId) === request.user.id && password) {
             if (newPassword) {
                 const hashedPassword = await hashPassword(newPassword)
