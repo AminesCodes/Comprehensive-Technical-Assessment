@@ -59,13 +59,13 @@ export default function Genres (props) {
             <hr />
             {showsList.map((show, index) =>
                 <ShowCard 
-                    key={index+show.title+show.image_url[0]}
+                    key={index+show.title+show.img_url}
                     title={show.title}
-                    imageUrl={show.image_url[0]}
+                    imageUrl={show.img_url}
                     usersList={show.usernames}
                     usersIds={show.users_ids}
-                    genresIds={[show.genre_ids[0]]}
-                    genresNames={[show.genre_names[0]]}
+                    genreId={show.genre_id}
+                    genreName={show.genre_name}
                 />
             )}
         </>

@@ -26,18 +26,19 @@ export default class UserShow extends React.PureComponent{
             promises.push(axios.get(`/api/shows/show/${showId}/${userId}`))
             promises.push(axios.get(`/api/comments/show/${showId}`))
 
-            const [ show, comments ] = await Promise.all(promises)
-            console.log(10000, comments)
-            
+            const [ showData, commentsData ] = await Promise.all(promises)
+            const show = showData.data.payload
+            const comments = commentsData.data.payload
+
             this.setState({
-                showId: show.data.payload.show_id,
-                showTitle: show.data.payload.title,
-                showImage: show.data.payload.img_url,
-                showGenreId: show.data.payload.genre_id,
-                showGenre: show.data.payload.genre,
-                targetUserId: show.data.payload.user_id,
-                targetUsername: show.data.payload.username,
-                showComments: comments.data.payload,
+                showId: show.show_id,
+                showTitle: show.title,
+                showImage: show.img_url,
+                showGenreId: show.genre_id,
+                showGenre: show.genre,
+                targetUserId: show.user_id,
+                targetUsername: show.username,
+                showComments: comments,
             })
         } catch (err) {
             this.setState({ networkErr: err })

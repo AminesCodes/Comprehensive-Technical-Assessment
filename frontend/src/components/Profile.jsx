@@ -27,7 +27,6 @@ export default function Profile(props) {
                 setNewPassword('')
                 setConfirmPassword('')
                 setUpdatePassword(false)
-                console.log(data)
             } 
 
         } catch (err) {

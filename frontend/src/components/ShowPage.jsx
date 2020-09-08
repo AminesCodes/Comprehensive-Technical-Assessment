@@ -13,9 +13,6 @@ export default function ShowPage (props) {
     const getShowInfo = async (showTitle) => {
         try {
             const { data } = await axios.get(`/api/shows/show/${showTitle}`)
-            const genres = removeDuplicates(data.payload.genre_names, data.payload.genre_ids)
-            data.payload.genre_names = Object.keys(genres)
-            data.payload.genre_ids = Object.values(genres)
             setShow(data.payload)
             
             const response = await axios.get(`/api/comments/shows/title/${showTitle}`)
@@ -24,14 +21,6 @@ export default function ShowPage (props) {
         } catch (err) {
             setNetworkErr(err)
         }
-    }
-
-    const removeDuplicates = (arr1, arr2) => {
-        const tracker = {}
-        for (let i=0; i<arr1.length; i++) {
-            tracker[arr1[i]] = arr2[i]
-        }
-        return tracker
     }
 
     useEffect(() => {
@@ -52,11 +41,11 @@ export default function ShowPage (props) {
             <>
                 <ShowCard 
                     title={show.title}
-                    imageUrl={show.image_url[0]}
+                    imageUrl={show.img_url}
                     usersList={show.usernames}
                     usersIds={show.users_ids}
-                    genresIds={show.genre_ids}
-                    genresNames={show.genre_names}
+                    genreId={show.genre_id}
+                    genreName={show.genre_name}
                 />
 
                 {comments.map(comment => 

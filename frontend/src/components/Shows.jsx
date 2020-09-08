@@ -15,24 +15,11 @@ export default function Shows (props) {
     const getAllShows = async () => {
         try {
             const { data } = await axios.get('/api/shows')
-            for (let show of data.payload) {
-                const genres = removeDuplicates(show.genre_names, show.genre_ids)
-                show.genre_names = Object.keys(genres)
-                show.genre_ids = Object.values(genres)  
-            }
             setShowsList(data.payload)
 
         } catch (err) {
             setNetworkErr(err)
         }
-    }
-
-    const removeDuplicates = (arr1, arr2) => {
-        const tracker = {}
-        for (let i=0; i<arr1.length; i++) {
-            tracker[arr1[i]] = arr2[i]
-        }
-        return tracker
     }
 
     const hideFeedbackDiv = () => {
@@ -43,21 +30,17 @@ export default function Shows (props) {
         return < Feedback err={networkErr} hideFeedbackDiv={hideFeedbackDiv}/>
     }
 
-    if (showsList.length === 0) {
-        return <></>
-    }
-
     return(
         <>
             {showsList.map((show, index) =>
                 <ShowCard 
-                    key={index+show.title+show.image_url[0]}
+                    key={index+show.title+show.image_url}
                     title={show.title}
-                    imageUrl={show.image_url[0]}
+                    imageUrl={show.img_url}
                     usersList={show.usernames}
                     usersIds={show.users_ids}
-                    genresIds={show.genre_ids}
-                    genresNames={show.genre_names}
+                    genreId={show.genre_id}
+                    genreName={show.genre_name}
                 />
             )}
         </>

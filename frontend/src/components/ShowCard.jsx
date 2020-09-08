@@ -28,12 +28,7 @@ export default function ShowCard (props) {
                         )}
                     </p>
                     <h4 className='text-right'>
-                        {props.genresNames.map((genre, index) => 
-                            <Link 
-                                key={props.genresIds[index]+genre+index} 
-                                to={`/genres/${props.genresIds[index]}`}
-                            >{genre} </Link>
-                        )}
+                        <Link to={`/genres/${props.genreId}`}>{props.genreName} </Link>
                     </h4>
                 </div>
             </div>
