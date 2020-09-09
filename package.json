@@ -4,7 +4,9 @@
   "description": "<img src=\"https://avatars1.githubusercontent.com/u/5825944?s=200&v=4\" width=\"100px\" style=\"text-align: center;\">",
   "main": "backend/app.js",
   "scripts": {
-    "start": "node ./backend/bin/www",
+    "start": "open-cli http://localhost:3131 && cd backend && node ./bin/www",
+    "init_db": "createdb tv_watch_list_app && cd backend && psql -f database/seed.sql -d tv_watch_list_app && cd ..",
+    "init_app": "cd backend && npm install && cd ../frontend && npm install && npm run build && cd ..",
     "heroku-postbuild": "cd backend && npm install && cd ../frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/AminesCodes/Comprehensive-Technical-Assessment/issues"
   },
-  "homepage": "https://github.com/AminesCodes/Comprehensive-Technical-Assessment#readme"
+  "homepage": "https://github.com/AminesCodes/Comprehensive-Technical-Assessment#readme",
+  "dependencies": {
+    "open-cli": "^6.0.1"
+  }
 }

@@ -10,7 +10,15 @@ The app is designed to helps people decide what to watch next, mostly by reading
 - Users are be able to **add shows** that they watch. These shows are shared on their profile pages.
 - Users can view the profile pages of other users.
 - Users are able to **add comments** on other users' shows.
-
+<br>
+<br>
+## Run App locally
+After cloning the repo, please run the following commands:
+- **npm run init_db** : Will create the database and seed it with some mock data
+- **npm run init_app** : Will install the install the dependencies and generates the build folder
+- **npm start** : Will open http://localhost:3131 and run the server
+<br>
+<br>
 ## Database Structure
 ![database schema diagram](./assets/schema_diagram.png)
 

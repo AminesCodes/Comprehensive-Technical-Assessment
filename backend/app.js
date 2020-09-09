@@ -11,7 +11,6 @@ const usersRouter = require('./routes/users');
 const genresRouter = require('./routes/genres');
 const showsRouter = require('./routes/shows');
 const commentsRouter = require('./routes/comments');
-const mySecret = require('./secret');
 const { checkUserLogged } = require('./auth/helpers');
 
 const app = express();
@@ -24,7 +23,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-    secret: mySecret,
+    secret: process.env.MY_SECRET,
     resave: false,
     saveUninitialized: true
   }))

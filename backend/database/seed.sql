@@ -1,7 +1,7 @@
--- DROP DATABASE IF EXISTS tvwatchlistapp;
--- CREATE DATABASE tvwatchlistapp;
+-- DROP DATABASE IF EXISTS tv_watch_list_app;
+-- CREATE DATABASE tv_watch_list_app;
 
--- \c tvwatchlistapp
+-- \c tv_watch_list_app
 
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows_users;
