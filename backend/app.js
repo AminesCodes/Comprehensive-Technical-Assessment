@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-    secret: process.env.MY_SECRET,
+    secret: process.env.MY_SECRET || 'not a so good secret',
     resave: false,
     saveUninitialized: true
   }))
